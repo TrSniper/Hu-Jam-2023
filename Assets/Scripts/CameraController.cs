@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Control")]
     [SerializeField] private float cameraMinYDistance = 3f;
-    [SerializeField] private float cameraMaxYDistance = 12f;
+    [SerializeField] private float cameraMaxYDistance = 7f;
 
     [Header("Fov and Aim")]
     [SerializeField] private float fovChangingSpeed = 100f;
@@ -20,8 +20,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float aimFovValue = 40f;
     [SerializeField] private float runningFovValue = 80f;
 
-    //private PlayerStateData psd;
-    //private PlayerInputManager pim;
+    private PlayerStateData psd;
+    private PlayerInputManager pim;
     private CinemachineVirtualCamera cam;
     private IEnumerator fovChangingRoutine;
 
@@ -30,8 +30,8 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        //psd = GameObject.Find("Player").GetComponent<PlayerStateData>();
-        //pim = psd.GetComponent<PlayerInputManager>();
+        psd = GameObject.Find("Player").GetComponent<PlayerStateData>();
+        pim = psd.GetComponent<PlayerInputManager>();
         cam = GetComponent<CinemachineVirtualCamera>();
 
         //Default values
@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        //if (psd.playerMainState is not (PlayerStateData.PlayerMainState.Normal or PlayerStateData.PlayerMainState.ScriptedEvent)) return;
+        if (psd.playerMainState is not (PlayerStateData.PlayerMainState.Normal or PlayerStateData.PlayerMainState.ScriptedEvent)) return;
 
         followTargetPositionDifference = followTargetTransform.position - followTargetPreviousPosition;
         transform.position += followTargetPositionDifference;
@@ -53,15 +53,15 @@ public class CameraController : MonoBehaviour
 
     private void ControlCamera()
     {
-        //transform.RotateAround(lookAtTargetTransform.position, Vector3.up, pim.lookInput.x);
-        //transform.RotateAround(lookAtTargetTransform.position, transform.right, pim.lookInput.y);
+        transform.RotateAround(lookAtTargetTransform.position, Vector3.up, pim.lookInput.x);
+        transform.RotateAround(lookAtTargetTransform.position, transform.right, pim.lookInput.y);
 
         float downLimit = lookAtTargetTransform.position.y - cameraMinYDistance;
         float upLimit = lookAtTargetTransform.position.y + cameraMaxYDistance;
 
-        //if ((transform.position.y < downLimit && pim.lookInput.y < 0) || (transform.position.y > upLimit && pim.lookInput.y > 0))
+        if ((transform.position.y < downLimit && pim.lookInput.y < 0) || (transform.position.y > upLimit && pim.lookInput.y > 0))
         {
-            //transform.RotateAround(lookAtTargetTransform.position, transform.right, -pim.lookInput.y);
+            transform.RotateAround(lookAtTargetTransform.position, transform.right, -pim.lookInput.y);
         }
 
         transform.LookAt(lookAtTargetTransform);

@@ -9,13 +9,18 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Info - No Touch")]
     public Vector2 lookInput;
     public Vector2 moveInput;
-    public bool isJumpKeyDown;
     public bool isRunKey;
-    public bool isRunKeyDown;
-    public bool isRunKeyUp;
+
+    public bool isJumpKeyDown;
+    public bool isJumpKeyUp;
+    public bool isDescendKeyDown;
+    public bool isDescendKeyUp;
+
     public bool isAimKeyDown;
     public bool isAimKeyUp;
     public bool isAttackKeyDown;
+
+    public bool isGravityKeyDown;
     public bool isInteractKeyDown;
 
     private void Awake()
@@ -31,17 +36,18 @@ public class PlayerInputManager : MonoBehaviour
         lookInput = pia.Player.Look.ReadValue<Vector2>() * sensitivity;
         lookInput.y *= -1; //Fixes y axis inversion
         moveInput = pia.Player.Movement.ReadValue<Vector2>();
+        isRunKey = pia.Player.Run.IsPressed();
 
-        //isJumpKeyDown = pia.Player.Jump.WasPressedThisFrame();
-
-        //isRunKey = pia.Player.Run.IsPressed();
-        //isRunKeyDown = pia.Player.Run.WasPressedThisFrame();
-        //isRunKeyUp = pia.Player.Run.WasReleasedThisFrame();
+        isJumpKeyDown = pia.Player.Jump.WasPressedThisFrame();
+        isJumpKeyUp = pia.Player.Jump.WasReleasedThisFrame();
+        isDescendKeyDown = pia.Player.Descend.WasPressedThisFrame();
+        isDescendKeyUp = pia.Player.Descend.WasReleasedThisFrame();
 
         //isAimKeyDown = pia.Player.Aim.WasPressedThisFrame();
         //isAimKeyUp = pia.Player.Aim.WasReleasedThisFrame();
         //isAttackKeyDown = pia.Player.Attack.WasPressedThisFrame();
 
+        isGravityKeyDown = pia.Player.Gravity.WasPressedThisFrame();
         //isInteractKeyDown = pia.Player.Interact.WasPressedThisFrame();
     }
 }

@@ -8,15 +8,11 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     [Header("Assign")]
     [SerializeField] private int health = 10;
-    [SerializeField] private int headDamage = 1;
-    [SerializeField] private int armsDamage = 3;
     [SerializeField] private int gunDamage = 5;
 
     [Header("Assign")] [SerializeField] private Transform gunLineOutTransform;
 
     [Header("Assign")]
-    [SerializeField] private float punchAttackAnimationPrepareTime = 0.3f;
-    [SerializeField] private float punchAttackAnimationTime = 0.8f;
     [SerializeField] private float rangedAttackCooldownTime = 1f;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
     [SerializeField] private float knockBackAmount = 5f;
@@ -27,7 +23,6 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private PlayerAnimationManager pam;
     private CrosshairManager cm;
     private PlayerCombatAudioManager pcam;
-    private AttackParticleEffect ape;
 
     private Camera mainCamera;
     private CameraController cameraController;
@@ -35,9 +30,6 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private bool isRangedAttackCooldownOver = true;
     private float rangedAttackAnimationTime;
-    private float meleeAttackAnimationTime;
-    private float meleeAttackPrepareTime;
-    private int meleeDamage;
 
     public event Action<int> OnHealthChanged;
 
@@ -48,32 +40,22 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         pam = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
         pcam = GetComponent<PlayerCombatAudioManager>();
-        ape = GetComponent<AttackParticleEffect>();
 
         mainCamera = Camera.main;
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
         gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
 
         //Default value
-        rangedAttackAnimationTime = pam.rangedAttackAnimationHalfDuration * 2;
-        meleeAttackAnimationTime = pam.headbuttAttackAnimationHalfDuration * 2;
-        meleeAttackPrepareTime = pam.headbuttAttackAnimationHalfDuration;
-        meleeDamage = headDamage;
+        //rangedAttackAnimationTime = pam.rangedAttackAnimationHalfDuration * 2;
     }
 
     private void Update()
     {
         //TODO: MORE UNDERSTANDABLE IF STATEMENTS
 
-        //TODO: EVENT
-        meleeAttackAnimationTime = punchAttackAnimationTime;
-        meleeAttackPrepareTime = punchAttackAnimationPrepareTime;
-        meleeDamage = armsDamage;
-
         if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
 
-        if (psd.isAiming && pim.isAttackKeyDown && !psd.isRangedAttacking && isRangedAttackCooldownOver) RangedAttack();
-        else if (!psd.isAiming && pim.isAttackKeyDown && !psd.isMeleeAttacking) MeleeAttack();
+        if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isRangedAttackCooldownOver) RangedAttack();
 
         if (gunLineRenderer.enabled)
         {
@@ -103,37 +85,19 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         }
     }
 
-    private async void MeleeAttack()
-    {
-        psd.isMeleeAttacking = true;
-
-        await UniTask.WaitForSeconds(meleeAttackPrepareTime);
-        if (cm.canMeleeAttack && cm.damageable != null)
-        {
-            cm.damageable.GetDamage(meleeDamage, transform.forward);
-            pcam.ToggleMeleeAttackSound(true);
-
-            ape.PlayPunchParticle();
-            ape.PlayHeadbuttParticle();//
-        }
-        await UniTask.WaitForSeconds(meleeAttackAnimationTime - punchAttackAnimationPrepareTime);
-
-        psd.isMeleeAttacking = false;
-    }
-
     private async void RangedAttack()
     {
-        psd.isRangedAttacking = true;
+        psd.isAttacking = true;
         StartRangedAttackCooldown();
 
         gunLineRenderer.enabled = true;
-        pcam.ToggleRangedAttackSound(true);
+        pcam.ToggleAttackSound(true);
 
         cm.damageable?.GetDamage(gunDamage, transform.forward);
         await UniTask.WaitForSeconds(rangedAttackAnimationTime);
 
         gunLineRenderer.enabled = false;
-        psd.isRangedAttacking = false;
+        psd.isAttacking = false;
     }
 
     private Vector3 GetMiddleOfTheScreen(float zValue)

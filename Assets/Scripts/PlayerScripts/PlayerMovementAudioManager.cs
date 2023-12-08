@@ -49,15 +49,15 @@ public class PlayerMovementAudioManager : MonoBehaviour
         }
 
         //Jump Group
-        //if (psd.isJumping && !isJumpSourcePlaying)
-        //{
-        //    isJumpSourcePlaying = true;
-        //    jumpSource.Play();
-        //}
-        //else if (!psd.isJumping && isJumpSourcePlaying)
-        //{
-        //    isJumpSourcePlaying = false;
-        //    jumpSource.Stop();
-        //}
+        if (psd.isJumping && !isJumpSourcePlaying)
+        {
+            isJumpSourcePlaying = true;
+            jumpSource.Play();
+        }
+        else if (!psd.isJumping && isJumpSourcePlaying)
+        {
+            isJumpSourcePlaying = false;
+            jumpSource.Stop();
+        }
     }
 }
