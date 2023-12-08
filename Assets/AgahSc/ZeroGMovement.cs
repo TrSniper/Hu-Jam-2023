@@ -37,4 +37,10 @@ public class ZeroGMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftControl))
                 rb.AddRelativeForce(transform.up * jumpForce * -1, ForceMode.VelocityChange);
     }
+
+    void Ates()
+    {
+        //a silahý
+        rb.AddRelativeForce(transform.forward * -1);
+    }
 }
