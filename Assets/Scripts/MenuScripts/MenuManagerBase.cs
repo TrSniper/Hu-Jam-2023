@@ -123,7 +123,7 @@ public class MenuManagerBase : MonoBehaviour
     private void ChangeSensitivity(float newValue)
     {
         PlayerPrefs.SetFloat("Sensitivity", newValue / 10);
-        //PlayerInputManager.sensitivity = newValue / 10;
+        PlayerInputManager.sensitivity = newValue / 10;
         sensitivityValueText.text = $"{newValue}";
     }
 }

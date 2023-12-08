@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class PauseMenuManager : MenuManagerBase
 {
-    //private PlayerStateData psd;
+    private PlayerStateData psd;
     private Canvas canvas;
 
-    //private PlayerStateData.PlayerMainState previousPlayerMainState;
+    private PlayerStateData.PlayerMainState previousPlayerMainState;
     private bool isGamePaused;
 
     private void Awake()
     {
-        //psd = GameObject.Find("Player").GetComponent<PlayerStateData>();
+        psd = GameObject.Find("Player").GetComponent<PlayerStateData>();
         canvas = GetComponent<Canvas>();
 
         //Default settings
@@ -39,7 +39,7 @@ public class PauseMenuManager : MenuManagerBase
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        //psd.playerMainState = previousPlayerMainState;
+        psd.playerMainState = previousPlayerMainState;
 
         mainScreen.SetActive(true);
         settingsScreen.SetActive(false);
@@ -55,7 +55,7 @@ public class PauseMenuManager : MenuManagerBase
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        //previousPlayerMainState = psd.playerMainState;
-        //psd.playerMainState = PlayerStateData.PlayerMainState.Paused;
+        previousPlayerMainState = psd.playerMainState;
+        psd.playerMainState = PlayerStateData.PlayerMainState.Paused;
     }
 }
