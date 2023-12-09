@@ -276,6 +276,7 @@ MonoBehaviour:
   isAimKeyDown: 0
   isAimKeyUp: 0
   isAttackKeyDown: 0
+  isAttackKey: 0
   isGravityKeyDown: 0
   isInteractKeyDown: 0
 --- !u!114 &9158508095905186468
@@ -408,12 +409,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  gunDamage: 5
-  rangedAttackCooldownTime: 1
   aimModeSensitivityModifier: 0.5
-  knockBackAmount: 5
   knockBackDuration: 0.2
-  weapons: []
+  attackAnimationTime: 0.2
+  weapons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   currentWeapon: {fileID: 0}
   currentWeaponIndex: 0
 --- !u!114 &8977488157403192514
@@ -432,7 +436,7 @@ MonoBehaviour:
   crosshairSprites:
   - {fileID: 21300000, guid: f6e67c8ecafa69043a6904bb0cc33cee, type: 3}
   - {fileID: 21300000, guid: f6e67c8ecafa69043a6904bb0cc33cee, type: 3}
-  - {fileID: 21300000, guid: 728f3791685a9074fa3fb6010b4add4f, type: 3}
+  - {fileID: 21300000, guid: cdc50a3f9eddd0542bb82a752c203d7b, type: 3}
   - {fileID: 21300000, guid: da2293691e5756c499fa0c2c33371039, type: 3}
   - {fileID: 21300000, guid: 4574161e4e44a4c4d961d912d9458294, type: 3}
   crosshairImage: {fileID: 0}
@@ -496,7 +500,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7806921628226467348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -533,7 +537,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: da2293691e5756c499fa0c2c33371039, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cdc50a3f9eddd0542bb82a752c203d7b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

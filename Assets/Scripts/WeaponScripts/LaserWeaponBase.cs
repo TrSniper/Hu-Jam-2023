@@ -32,10 +32,4 @@ public class LaserWeaponBase : WeaponBase
         await UniTask.WaitForSeconds(laserTime);
         lr.enabled = false;
     }
-
-    private Vector3 GetMiddleOfTheScreen(float zValue)
-    {
-        Vector3 viewportMiddle = new Vector3(0.5f, 0.5f, zValue);
-        return mainCamera.ViewportToWorldPoint(viewportMiddle);
-    }
 }

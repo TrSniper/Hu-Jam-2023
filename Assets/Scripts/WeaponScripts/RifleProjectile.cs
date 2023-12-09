@@ -1,4 +1,4 @@
-public class RifleLaser : LaserWeaponBase
+public class RifleProjectile : ProjectileWeaponBase
 {
     private void Awake()
     {

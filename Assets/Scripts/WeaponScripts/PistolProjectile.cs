@@ -1,4 +1,4 @@
-using UnityEngine;
+using System;
 
 public class PistolProjectile : ProjectileWeaponBase
 {
@@ -7,8 +7,8 @@ public class PistolProjectile : ProjectileWeaponBase
         OnAwake();
     }
 
-    public override async void Attack()
+    private void Update()
     {
-        base.Attack();
+        OnUpdate();
     }
 }

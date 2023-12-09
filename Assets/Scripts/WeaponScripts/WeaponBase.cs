@@ -12,15 +12,21 @@ public class WeaponBase : MonoBehaviour
 
     [Header("Info - No Touch")] public bool isLaser;
 
-    protected Camera mainCamera;
     protected PlayerAimManager pam;
+    protected Camera mainCamera;
 
     protected virtual void OnAwake()
     {
-        mainCamera = Camera.main;
         pam = GameObject.Find("Player").GetComponent<PlayerAimManager>();
+        mainCamera = Camera.main;
     }
 
     protected virtual void OnUpdate() {}
-    public virtual async void Attack() {}
+    public virtual void Attack() {}
+
+    protected Vector3 GetMiddleOfTheScreen(float zValue)
+    {
+        Vector3 viewportMiddle = new Vector3(0.5f, 0.5f, zValue);
+        return Camera.main.ViewportToWorldPoint(viewportMiddle);
+    }
 }
