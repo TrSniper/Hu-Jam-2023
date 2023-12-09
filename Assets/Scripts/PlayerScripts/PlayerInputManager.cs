@@ -47,9 +47,9 @@ public class PlayerInputManager : MonoBehaviour
         isDescendKeyDown = pia.Player.Descend.WasPressedThisFrame();
         isDescendKeyUp = pia.Player.Descend.WasReleasedThisFrame();
 
-        //isAimKeyDown = pia.Player.Aim.WasPressedThisFrame();
-        //isAimKeyUp = pia.Player.Aim.WasReleasedThisFrame();
-        //isAttackKeyDown = pia.Player.Attack.WasPressedThisFrame();
+        isAimKeyDown = pia.Player.Aim.WasPressedThisFrame();
+        isAimKeyUp = pia.Player.Aim.WasReleasedThisFrame();
+        isAttackKeyDown = pia.Player.Attack.WasPressedThisFrame();
 
         isGravityKeyDown = pia.Player.Gravity.WasPressedThisFrame();
         //isInteractKeyDown = pia.Player.Interact.WasPressedThisFrame();

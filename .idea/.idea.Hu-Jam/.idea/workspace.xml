@@ -5,12 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3cd5d8-86ca-469f-83bf-4e0894f540d9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/LaserCrosshair.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/LaserCrosshair.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/PistolCrosshair.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/PistolCrosshair.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/RifleCrosshair.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/RifleCrosshair.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/RocketCrosshair.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UISprites/Crosshairs/RocketCrosshair.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Hu-Jam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hu-Jam/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Main Camera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Main Camera.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerCamera.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerPrefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerPrefabs/Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/OzgurScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OzgurScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/CrosshairManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/CrosshairManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/Interfaces.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/Interfaces.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/NoTouch/PlayerInputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/NoTouch/PlayerInputActions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/NoTouch/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/NoTouch/PlayerInputActions.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/PlayerCombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/PlayerCombatManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/PlayerInputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/PlayerInputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UISprites/Crosshair.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UISprites/Crosshair.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +140,7 @@
       <updated>1702056965006</updated>
       <workItem from="1702056966351" duration="1465000" />
       <workItem from="1702058518470" duration="16604000" />
-      <workItem from="1702103571742" duration="9923000" />
+      <workItem from="1702103571742" duration="16167000" />
     </task>
     <servers />
   </component>

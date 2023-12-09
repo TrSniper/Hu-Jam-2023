@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float verticalSpeed = 5f;
     [SerializeField] private float rotatingSpeed = 0.1f;
-    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float acceleration = 15f;
     [SerializeField] private float deceleration = 15f;
     [SerializeField] private float zeroGravityAcceleration = 4f;
 
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         verticalSpeedReal = 0;
 
         //Defaults
-        leftRightSpeedRoutine = ChangeRightLeftSpeed(0f);
+        leftRightSpeedRoutine = ChangeLeftRightSpeed(0f);
         forwardBackwardSpeedRoutine = ChangeForwardBackwardSpeed(0f);
         verticalSpeedRoutine = ChangeVerticalSpeed(true, 0f);
     }
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Moving to idle
-        else if (!psd.isMoving)
+        else if (!psd.isMoving && !psd.isAiming && (psd.isRunning || psd.isWalking))
         {
             psd.isRunning = false;
             psd.isWalking = false;
@@ -120,18 +120,28 @@ public class PlayerController : MonoBehaviour
         else if (psd.isWalking) movingSpeed = walkingSpeed;
         else movingSpeed = runningSpeed;
 
-        //TODO: COROUTINES WORKS ALWAYS, VERY BAD
+        //TODO: shit
 
-        if (leftRightSpeed != movingSpeed * pim.moveInput.x)
+        if ((pim.moveInput.x > 0 && leftRightSpeed != movingSpeed && !isChangeLeftRightSpeedRunningIncreasing) ||
+            (pim.moveInput.x < 0 && leftRightSpeed != -movingSpeed && !isChangeLeftRightSpeedRunningDecreasing) ||
+            (pim.moveInput.x == 0 && leftRightSpeed != 0f && !isChangeLeftRightSpeedRunningDecreasing))
         {
             StopCoroutine(leftRightSpeedRoutine);
-            leftRightSpeedRoutine = ChangeRightLeftSpeed(movingSpeed * pim.moveInput.x);
+            isChangeLeftRightSpeedRunningIncreasing = false;
+            isChangeLeftRightSpeedRunningDecreasing = false;
+
+            leftRightSpeedRoutine = ChangeLeftRightSpeed(movingSpeed * pim.moveInput.x);
             StartCoroutine(leftRightSpeedRoutine);
         }
 
-        if (forwardBackwardSpeed != movingSpeed * pim.moveInput.x)
+        if ((pim.moveInput.y > 0 && forwardBackwardSpeed != movingSpeed && !isChangeForwardBackwardSpeedRunningIncreasing) ||
+            (pim.moveInput.y < 0 && forwardBackwardSpeed != -movingSpeed && !isChangeForwardBackwardSpeedRunningDecreasing) ||
+            (pim.moveInput.y == 0 && forwardBackwardSpeed != 0f && !isChangeForwardBackwardSpeedRunningDecreasing))
         {
             StopCoroutine(forwardBackwardSpeedRoutine);
+            isChangeForwardBackwardSpeedRunningIncreasing = false;
+            isChangeForwardBackwardSpeedRunningDecreasing = false;
+
             forwardBackwardSpeedRoutine = ChangeForwardBackwardSpeed(movingSpeed * pim.moveInput.y);
             StartCoroutine(forwardBackwardSpeedRoutine);
         }
@@ -243,26 +253,37 @@ public class PlayerController : MonoBehaviour
 
     #region ChangeSpeed
 
-    private IEnumerator ChangeRightLeftSpeed(float leftRightSpeedToReach)
+    [Header("Info - No Touch")]
+    [SerializeField] private bool isChangeLeftRightSpeedRunningIncreasing;
+    [SerializeField] private bool isChangeLeftRightSpeedRunningDecreasing;
+    [SerializeField] private bool isChangeForwardBackwardSpeedRunningIncreasing;
+    [SerializeField] private bool isChangeForwardBackwardSpeedRunningDecreasing;
+
+    private IEnumerator ChangeLeftRightSpeed(float leftRightSpeedToReach)
     {
+        //Debug.Log("left right: " + (forwardBackwardSpeed < leftRightSpeedToReach));
         if (leftRightSpeed < leftRightSpeedToReach)
         {
+            isChangeLeftRightSpeedRunningIncreasing = true;
             while (leftRightSpeed < leftRightSpeedToReach)
             {
                 if (GravityManager.isGravityActive) leftRightSpeed += acceleration * Time.deltaTime;
                 else leftRightSpeed += zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
+            isChangeLeftRightSpeedRunningIncreasing = false;
         }
 
         else
         {
+            isChangeLeftRightSpeedRunningDecreasing = true;
             while (leftRightSpeed > leftRightSpeedToReach)
             {
                 if (GravityManager.isGravityActive) leftRightSpeed -= deceleration * Time.deltaTime;
                 else leftRightSpeed -= zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
+            isChangeLeftRightSpeedRunningDecreasing = false;
         }
 
         leftRightSpeed = leftRightSpeedToReach;
@@ -270,24 +291,29 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ChangeForwardBackwardSpeed(float forwardBackwardSpeedToReach)
     {
+        //Debug.Log("forward backward: " + (forwardBackwardSpeed < forwardBackwardSpeedToReach));
         if (forwardBackwardSpeed < forwardBackwardSpeedToReach)
         {
+            isChangeForwardBackwardSpeedRunningIncreasing = true;
             while (forwardBackwardSpeed < forwardBackwardSpeedToReach)
             {
                 if (GravityManager.isGravityActive) forwardBackwardSpeed += acceleration * Time.deltaTime;
                 else forwardBackwardSpeed += zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
+            isChangeForwardBackwardSpeedRunningIncreasing = false;
         }
 
         else
         {
+            isChangeForwardBackwardSpeedRunningDecreasing = true;
             while (forwardBackwardSpeed > forwardBackwardSpeedToReach)
             {
                 if (GravityManager.isGravityActive) forwardBackwardSpeed -= deceleration * Time.deltaTime;
                 else forwardBackwardSpeed -= zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
+            isChangeForwardBackwardSpeedRunningDecreasing = false;
         }
 
         forwardBackwardSpeed = forwardBackwardSpeedToReach;
