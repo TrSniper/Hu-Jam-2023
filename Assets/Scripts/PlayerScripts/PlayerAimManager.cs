@@ -71,5 +71,10 @@ public class PlayerAimManager : MonoBehaviour
                 if (canAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
         }
+
+        else
+        {
+            distanceToHitTarget = attackRange;
+        }
     }
 }

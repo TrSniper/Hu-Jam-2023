@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PistolProjectile : MonoBehaviour
+public class PistolProjectile : ProjectileWeaponBase
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        OnAwake();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override async void Attack()
     {
-        
+        base.Attack();
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PistolLaser : LaserWeaponBase
+public class RifleLaser : LaserWeaponBase
 {
     private void Awake()
     {
@@ -10,7 +10,7 @@ public class PistolLaser : LaserWeaponBase
     public override async void Attack()
     {
         base.Attack();
-        Debug.Log("Attack Pistol Laser");
+        Debug.Log("Attack Rifle Laser");
     }
 
     private void Update()
