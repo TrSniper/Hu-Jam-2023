@@ -234,8 +234,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 velocity = cameraTransform.right * leftRightSpeed + cameraTransform.forward * forwardBackwardSpeed;
-        velocity.y = 0f;
-        rb.velocity = velocity;
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
     }
 
     private void HandleRotation()
