@@ -6,10 +6,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 {
     [Header("Assign")]
     [SerializeField] private int health = 10;
-
-    [Header("Assign")]
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
     [SerializeField] private float knockBackDuration = 0.2f;
+    [SerializeField] private float attackAnimationTime = 0.2f;
 
     [Header("Info - No Touch")]
     [SerializeField] private WeaponBase[] weapons;
@@ -24,7 +23,6 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private CameraController cameraController;
 
     private bool isAttackCooldownOver = true;
-    private float attackAnimationTime;
 
     //public bool isCombatMode;
 
@@ -40,7 +38,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         //pcam = GetComponent<PlayerCombatAudioManager>();
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
 
-        ChangeWeapon(0);
+        ChangeWeapon(true);
     }
 
     private void Update()
@@ -52,27 +50,43 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         //}
         //if (!isCombatMode) return;
 
-        if (pim.changeWeaponInput > 0) ChangeWeapon(currentWeaponIndex + 1);
-        else if (pim.changeWeaponInput < 0) ChangeWeapon(currentWeaponIndex - 1);
+        if (pim.changeWeaponInput > 0) ChangeWeapon(true);
+        else if (pim.changeWeaponInput < 0) ChangeWeapon(false);
 
         if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
-        if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isAttackCooldownOver) Attack();
+        if (psd.isAiming && pim.isAttackKey && isAttackCooldownOver && currentWeapon.canAutoFire) Attack();
+        else if (psd.isAiming && pim.isAttackKeyDown && isAttackCooldownOver) Attack();
     }
 
-    private void ChangeWeapon(int newWeaponIndex)
+    private void ChangeWeapon(bool isNextWeaponWillBeSelected)
     {
-        foreach (WeaponBase weapon in weapons)
+        if (isNextWeaponWillBeSelected)
         {
-            if (weapon.weaponIndex == newWeaponIndex)
+            for (int i = currentWeaponIndex + 1; i < weapons.Length; i++)
             {
-                currentWeapon = weapon;
-                currentWeaponIndex = newWeaponIndex;
-                cm.ChangeCrosshairImage(newWeaponIndex);
-
-                //TODO: weapon select sound
-                return;
+                if (weapons[i] != null)
+                {
+                    currentWeaponIndex = i;
+                    currentWeapon = weapons[i];
+                    break;
+                }
             }
         }
+
+        else
+        {
+            for (int i = currentWeaponIndex - 1; i >= 0; i--)
+            {
+                if (weapons[i] != null)
+                {
+                    currentWeaponIndex = i;
+                    currentWeapon = weapons[i];
+                    break;
+                }
+            }
+        }
+
+        cm.ChangeCrosshairImage(currentWeaponIndex);
     }
 
     private void ToggleAim()
@@ -105,7 +119,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         //pcam.ToggleAttackSound(true);
         pam.damageable?.GetDamage(currentWeapon.damage, transform.forward);
         currentWeapon.Attack();
-        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
+        if (currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
 
         await UniTask.WaitForSeconds(attackAnimationTime);
 

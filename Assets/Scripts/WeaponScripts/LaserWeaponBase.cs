@@ -1,0 +1,41 @@
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+
+public class LaserWeaponBase : WeaponBase
+{
+    [Header("Assign")] [SerializeField] protected float laserTime = 0.1f;
+
+    private LineRenderer lr;
+
+    protected override void OnAwake()
+    {
+        base.OnAwake();
+
+        lr = GetComponent<LineRenderer>();
+        isLaser = true;
+    }
+
+    protected override void OnUpdate()
+    {
+        if (lr.enabled)
+        {
+            lr.SetPosition(0, outTransform.position);
+            lr.SetPosition(1, GetMiddleOfTheScreen(pam.distanceToHitTarget));
+        }
+    }
+
+    public override async void Attack()
+    {
+        base.Attack();
+
+        lr.enabled = true;
+        await UniTask.WaitForSeconds(laserTime);
+        lr.enabled = false;
+    }
+
+    private Vector3 GetMiddleOfTheScreen(float zValue)
+    {
+        Vector3 viewportMiddle = new Vector3(0.5f, 0.5f, zValue);
+        return mainCamera.ViewportToWorldPoint(viewportMiddle);
+    }
+}

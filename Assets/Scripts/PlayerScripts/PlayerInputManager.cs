@@ -24,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool isAimKeyDown;
     public bool isAimKeyUp;
     public bool isAttackKeyDown;
+    public bool isAttackKey;
 
     public bool isGravityKeyDown;
     public bool isInteractKeyDown;
@@ -56,6 +57,7 @@ public class PlayerInputManager : MonoBehaviour
         isAimKeyDown = pia.Player.Aim.WasPressedThisFrame();
         isAimKeyUp = pia.Player.Aim.WasReleasedThisFrame();
         isAttackKeyDown = pia.Player.Attack.WasPressedThisFrame();
+        isAttackKey = pia.Player.Attack.IsPressed();
 
         isGravityKeyDown = pia.Player.Gravity.WasPressedThisFrame();
         //isInteractKeyDown = pia.Player.Interact.WasPressedThisFrame();
