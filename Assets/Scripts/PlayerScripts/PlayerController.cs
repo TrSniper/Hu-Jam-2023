@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float zeroGravityAcceleration = 4f;
 
     [Header("Info - No Touch")]
-    [SerializeField] private float movingSpeed;
+    [SerializeField] private float leftRightSpeed;
+    [SerializeField] private float forwardBackwardSpeed;
     [SerializeField] private float verticalSpeedReal;
     private Vector3 movingDirection;
 
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
 
     private IEnumerator walkRunSpeedRoutine;
+    private IEnumerator leftRightSpeedRoutine;
+    private IEnumerator forwardBackwardSpeedRoutine;
     private IEnumerator verticalSpeedRoutine;
 
     private void Awake()
@@ -37,9 +40,15 @@ public class PlayerController : MonoBehaviour
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
         cameraTransform = cameraController.transform;
 
-        //Default Value
-        movingSpeed = walkingSpeed;
+        //Default Values
+        forwardBackwardSpeed = walkingSpeed;
+        leftRightSpeed = walkingSpeed;
         verticalSpeedReal = 0;
+
+        //Defaults
+        leftRightSpeedRoutine = ChangeRightLeftSpeed(0f);
+        forwardBackwardSpeedRoutine = ChangeForwardBackwardSpeed(0f);
+        verticalSpeedRoutine = ChangeVerticalSpeed(true, 0f);
     }
 
     private void Update()
@@ -58,6 +67,7 @@ public class PlayerController : MonoBehaviour
         HandleVerticalMovement();
 
         HandleRotation();
+        HandleMovementSpeeds();
     }
 
     private void FixedUpdate()
@@ -82,31 +92,11 @@ public class PlayerController : MonoBehaviour
             psd.isWalking = false;
 
             cameraController.ChangeCameraFov(CameraController.FovMode.RunningFov);
-
-            if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-            walkRunSpeedRoutine = ChangeMovingSpeed(true, runningSpeed);
-            StartCoroutine(walkRunSpeedRoutine);
         }
 
         //Running or idle to walking
         else if (psd.isMoving && !pim.isRunKey && !psd.isWalking && !psd.isAiming)
         {
-            //From running
-            if (psd.isRunning)
-            {
-                if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-                walkRunSpeedRoutine = ChangeMovingSpeed(false, walkingSpeed);
-                StartCoroutine(walkRunSpeedRoutine);
-            }
-
-            //From idle
-            else
-            {
-                if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-                walkRunSpeedRoutine = ChangeMovingSpeed(true, walkingSpeed);
-                StartCoroutine(walkRunSpeedRoutine);
-            }
-
             psd.isRunning = false;
             psd.isWalking = true;
 
@@ -120,10 +110,30 @@ public class PlayerController : MonoBehaviour
             psd.isWalking = false;
 
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
+        }
+    }
 
-            if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-            walkRunSpeedRoutine = ChangeMovingSpeed(false, 0f);
-            StartCoroutine(walkRunSpeedRoutine);
+    private void HandleMovementSpeeds()
+    {
+        float movingSpeed;
+        if (psd.isIdle) movingSpeed = 0f;
+        else if (psd.isWalking) movingSpeed = walkingSpeed;
+        else movingSpeed = runningSpeed;
+
+        //TODO: COROUTINES WORKS ALWAYS, VERY BAD
+
+        if (leftRightSpeed != movingSpeed * pim.moveInput.x)
+        {
+            StopCoroutine(leftRightSpeedRoutine);
+            leftRightSpeedRoutine = ChangeRightLeftSpeed(movingSpeed * pim.moveInput.x);
+            StartCoroutine(leftRightSpeedRoutine);
+        }
+
+        if (forwardBackwardSpeed != movingSpeed * pim.moveInput.x)
+        {
+            StopCoroutine(forwardBackwardSpeedRoutine);
+            forwardBackwardSpeedRoutine = ChangeForwardBackwardSpeed(movingSpeed * pim.moveInput.y);
+            StartCoroutine(forwardBackwardSpeedRoutine);
         }
     }
 
@@ -156,7 +166,7 @@ public class PlayerController : MonoBehaviour
         {
             if (pim.isJumpKeyDown)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(true, verticalSpeed);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -166,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
             else if (pim.isJumpKeyUp)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(false, 0);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -181,7 +191,7 @@ public class PlayerController : MonoBehaviour
         {
             if (pim.isDescendKeyDown)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(false, -verticalSpeed);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -191,7 +201,7 @@ public class PlayerController : MonoBehaviour
 
             else if (pim.isDescendKeyUp)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(true, 0);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -213,7 +223,9 @@ public class PlayerController : MonoBehaviour
             movingDirection.y = 0f;
         }
 
-        rb.velocity = new Vector3(movingDirection.x * movingSpeed, rb.velocity.y, movingDirection.z * movingSpeed);
+        Vector3 velocity = cameraTransform.right * leftRightSpeed + cameraTransform.forward * forwardBackwardSpeed;
+        velocity.y = 0f;
+        rb.velocity = velocity;
     }
 
     private void HandleRotation()
@@ -229,29 +241,56 @@ public class PlayerController : MonoBehaviour
         else if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
     }
 
-    private IEnumerator ChangeMovingSpeed(bool isIncreasing, float movingSpeedToReach)
+    #region ChangeSpeed
+
+    private IEnumerator ChangeRightLeftSpeed(float leftRightSpeedToReach)
     {
-        if (isIncreasing)
+        if (leftRightSpeed < leftRightSpeedToReach)
         {
-            while (movingSpeed < movingSpeedToReach)
+            while (leftRightSpeed < leftRightSpeedToReach)
             {
-                if (GravityManager.isGravityActive) movingSpeed += acceleration * Time.deltaTime;
-                else movingSpeed += zeroGravityAcceleration * Time.deltaTime;
+                if (GravityManager.isGravityActive) leftRightSpeed += acceleration * Time.deltaTime;
+                else leftRightSpeed += zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
         }
 
         else
         {
-            while (movingSpeed > movingSpeedToReach)
+            while (leftRightSpeed > leftRightSpeedToReach)
             {
-                if (GravityManager.isGravityActive) movingSpeed -= deceleration * Time.deltaTime;
-                else movingSpeed -= zeroGravityAcceleration * Time.deltaTime;
+                if (GravityManager.isGravityActive) leftRightSpeed -= deceleration * Time.deltaTime;
+                else leftRightSpeed -= zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
         }
 
-        movingSpeed = movingSpeedToReach;
+        leftRightSpeed = leftRightSpeedToReach;
+    }
+
+    private IEnumerator ChangeForwardBackwardSpeed(float forwardBackwardSpeedToReach)
+    {
+        if (forwardBackwardSpeed < forwardBackwardSpeedToReach)
+        {
+            while (forwardBackwardSpeed < forwardBackwardSpeedToReach)
+            {
+                if (GravityManager.isGravityActive) forwardBackwardSpeed += acceleration * Time.deltaTime;
+                else forwardBackwardSpeed += zeroGravityAcceleration * Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        else
+        {
+            while (forwardBackwardSpeed > forwardBackwardSpeedToReach)
+            {
+                if (GravityManager.isGravityActive) forwardBackwardSpeed -= deceleration * Time.deltaTime;
+                else forwardBackwardSpeed -= zeroGravityAcceleration * Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        forwardBackwardSpeed = forwardBackwardSpeedToReach;
     }
 
     private IEnumerator ChangeVerticalSpeed(bool isIncreasing, float verticalSpeedToReach)
@@ -276,4 +315,6 @@ public class PlayerController : MonoBehaviour
 
         verticalSpeedReal = verticalSpeedToReach;
     }
+
+    #endregion
 }
