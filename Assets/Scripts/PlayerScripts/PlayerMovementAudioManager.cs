@@ -1,17 +1,27 @@
 using UnityEngine;
 
-//TODO: THIS SCRIPT IS SHIT BUT I AM VERY SLEEPY, HAVE FEW HOURS LEFT UNTIL JAM DEADLINE, IMPORTANT THINGS TO FIX AND DONT HAVE ANY BRAIN CELL TO SPARE
-
 public class PlayerMovementAudioManager : MonoBehaviour
 {
-    [Header("Assign")]
+    [Header("Assign - Gravity")]
     [SerializeField] private AudioSource walkSource;
     [SerializeField] private AudioSource runSource;
     [SerializeField] private AudioSource jumpSource;
 
+    [Header("Assign - Zero Gravity")]
+    [SerializeField] private AudioSource zeroGravityMovementSource;
+    [SerializeField] private AudioSource ascendSource;
+    [SerializeField] private AudioSource descentSource;
+
+    [Header("Assign")]
+    [SerializeField] private AudioSource dashSource;
+
     private bool isWalkSourcePlaying;
     private bool isRunSourcePlaying;
     private bool isJumpSourcePlaying;
+
+    private bool isZeroGravityMovementPlaying;
+    private bool isAscendSourcePlaying;
+    private bool isDescentSourcePlayingPlaying;
 
     private PlayerStateData psd;
 
@@ -22,42 +32,84 @@ public class PlayerMovementAudioManager : MonoBehaviour
 
     private void Update()
     {
-        //Walk - Run Group
-        if (!psd.isMoving)
+        if (GravityManager.isGravityActive)
         {
-            isWalkSourcePlaying = false;
-            walkSource.Stop();
+            //Walk - Run Group
+            if (!psd.isMoving)
+            {
+                isWalkSourcePlaying = false;
+                walkSource.Stop();
 
-            isRunSourcePlaying = false;
-            runSource.Stop();
-        }
-        else if (psd.isWalking && !isWalkSourcePlaying)
-        {
-            isWalkSourcePlaying = true;
-            walkSource.Play();
+                isRunSourcePlaying = false;
+                runSource.Stop();
+            }
+            else if (psd.isWalking && !isWalkSourcePlaying)
+            {
+                isWalkSourcePlaying = true;
+                walkSource.Play();
 
-            isRunSourcePlaying = false;
-            runSource.Stop();
-        }
-        else if (psd.isRunning && !isRunSourcePlaying)
-        {
-            isWalkSourcePlaying = false;
-            walkSource.Stop();
+                isRunSourcePlaying = false;
+                runSource.Stop();
+            }
+            else if (psd.isRunning && !isRunSourcePlaying)
+            {
+                isWalkSourcePlaying = false;
+                walkSource.Stop();
 
-            isRunSourcePlaying = true;
-            runSource.Play();
+                isRunSourcePlaying = true;
+                runSource.Play();
+            }
+
+            //Jump Group
+            if (psd.isJumping && !isJumpSourcePlaying)
+            {
+                isJumpSourcePlaying = true;
+                jumpSource.Play();
+            }
+            else if (!psd.isJumping && isJumpSourcePlaying)
+            {
+                isJumpSourcePlaying = false;
+                jumpSource.Stop();
+            }
         }
 
-        //Jump Group
-        if (psd.isJumping && !isJumpSourcePlaying)
+        else
         {
-            isJumpSourcePlaying = true;
-            jumpSource.Play();
-        }
-        else if (!psd.isJumping && isJumpSourcePlaying)
-        {
-            isJumpSourcePlaying = false;
-            jumpSource.Stop();
+            //Movement Group
+            if (psd.isMoving && !isZeroGravityMovementPlaying)
+            {
+                zeroGravityMovementSource.Play();
+                isZeroGravityMovementPlaying = true;
+            }
+            else if (!psd.isMoving && isZeroGravityMovementPlaying)
+            {
+                zeroGravityMovementSource.Stop();
+                isZeroGravityMovementPlaying = false;
+            }
+
+            //Ascend Group
+            if (psd.isAscending && !isAscendSourcePlaying)
+            {
+                ascendSource.Play();
+                isAscendSourcePlaying = true;
+            }
+            else if (!psd.isAscending && isAscendSourcePlaying)
+            {
+                ascendSource.Play();
+                isAscendSourcePlaying = false;
+            }
+
+            //Descend Group
+            if (psd.isDescending && !isDescentSourcePlayingPlaying)
+            {
+                descentSource.Play();
+                isDescentSourcePlayingPlaying = true;
+            }
+            else if (!psd.isDescending && isDescentSourcePlayingPlaying)
+            {
+                descentSource.Play();
+                isDescentSourcePlayingPlaying = false;
+            }
         }
     }
 }

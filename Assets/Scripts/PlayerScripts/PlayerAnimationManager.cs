@@ -16,13 +16,6 @@ public class PlayerAnimationManager : MonoBehaviour
 
     private void Update()
     {
-        //TODO: AIM and BLEND TREE
-        if (psd.isAttacking) an.Play("Attack");
-        else if (psd.isIdle) an.Play("Idle");
-        else if (psd.isJumping) an.Play("Jump");
-        else if (psd.isAscending) an.Play("Ascend");
-        else if (psd.isDescending) an.Play("Descent");
-        else if (psd.isWalking) an.Play("Walk");
-        else if (psd.isRunning) an.Play("Run");
+
     }
 }
