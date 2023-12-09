@@ -9,9 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float verticalSpeed = 5f;
     [SerializeField] private float rotatingSpeed = 0.1f;
-    [SerializeField] private float acceleration = 5f;
-    [SerializeField] private float deceleration = 10f;
-    [SerializeField] private float zeroGravityAcceleration = 2.5f;
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float deceleration = 15f;
+    [SerializeField] private float zeroGravityAcceleration = 4f;
 
     [Header("Info - No Touch")]
     [SerializeField] private float movingSpeed;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
         //Default Value
         movingSpeed = walkingSpeed;
-        verticalSpeedReal = verticalSpeed;
+        verticalSpeedReal = 0;
     }
 
     private void Update()
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void DecideWalkingOrRunning()
     {
-        //Walking to running
+        //Idle or walking to running
         if (psd.isMoving && pim.isRunKey && !psd.isRunning && !psd.isAiming)
         {
             psd.isRunning = true;
@@ -129,8 +129,16 @@ public class PlayerController : MonoBehaviour
 
     private void ControlGravity()
     {
-        if (pim.isGravityKeyDown && !GravityManager.isGravityActive) GravityManager.ActivateGravity();
-        else if (pim.isGravityKeyDown && GravityManager.isGravityActive) GravityManager.DeactivateGravity();
+        if (pim.isGravityKeyDown && !GravityManager.isGravityActive)
+        {
+            rb.useGravity = true;
+            GravityManager.ActivateGravity();
+        }
+        else if (pim.isGravityKeyDown && GravityManager.isGravityActive)
+        {
+            rb.useGravity = false;
+            GravityManager.DeactivateGravity();
+        }
     }
 
     private void HandleJump()
