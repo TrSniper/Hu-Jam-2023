@@ -5,14 +5,14 @@ public class PlayerInteractionManager : MonoBehaviour
     [Header("Sound")] [SerializeField] private AudioSource extensionUnlockSound;
 
     private PlayerInputManager pim;
-    private CrosshairManager cm;
+    private PlayerAimManager cm;
 
     private bool isLookingAtInteractable;
 
     private void Awake()
     {
         pim = GetComponent<PlayerInputManager>();
-        cm = GetComponent<CrosshairManager>();
+        cm = GetComponent<PlayerAimManager>();
     }
 
     private void Update()

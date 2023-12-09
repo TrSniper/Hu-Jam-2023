@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class PlayerCombatManager : MonoBehaviour, IDamageable
 {
-
     [Header("Assign")]
     [SerializeField] private int health = 10;
-    [SerializeField] private int gunDamage = 5;
-
-    [Header("Assign")] [SerializeField] private Transform gunLineOutTransform;
 
     [Header("Assign")]
-    [SerializeField] private float rangedAttackCooldownTime = 1f;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
-    [SerializeField] private float knockBackAmount = 5f;
     [SerializeField] private float knockBackDuration = 0.2f;
+
+    [Header("Info - No Touch")]
+    [SerializeField] private WeaponBase[] weapons;
+    [SerializeField] private WeaponBase currentWeapon;
+    [SerializeField] private int currentWeaponIndex;
 
     private PlayerStateData psd;
     private PlayerInputManager pim;
+    private PlayerAimManager pam;
     private CrosshairManager cm;
     //private PlayerCombatAudioManager pcam;
-
-    private Camera mainCamera;
     private CameraController cameraController;
-    //private LineRenderer gunLineRenderer;
 
-    private bool isRangedAttackCooldownOver = true;
-    private float rangedAttackAnimationTime;
+    private bool isAttackCooldownOver = true;
+    private float attackAnimationTime;
 
-    public bool isCombatMode;
+    //public bool isCombatMode;
 
     public event Action<int> OnHealthChanged;
     public static event Action OnPlayerDeath;
@@ -38,15 +35,12 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     {
         psd = GetComponent<PlayerStateData>();
         pim = GetComponent<PlayerInputManager>();
+        pam = GetComponent<PlayerAimManager>();
         cm = GetComponent<CrosshairManager>();
         //pcam = GetComponent<PlayerCombatAudioManager>();
-
-        mainCamera = Camera.main;
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
-        //gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
 
-        //Default value
-        //rangedAttackAnimationTime = pam.rangedAttackAnimationHalfDuration * 2;
+        ChangeWeapon(0);
     }
 
     private void Update()
@@ -58,14 +52,27 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         //}
         //if (!isCombatMode) return;
 
-        if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
-        if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isRangedAttackCooldownOver) Attack();
+        if (pim.changeWeaponInput > 0) ChangeWeapon(currentWeaponIndex + 1);
+        else if (pim.changeWeaponInput < 0) ChangeWeapon(currentWeaponIndex - 1);
 
-        //if (gunLineRenderer.enabled)
-        //{
-        //    gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
-        //    gunLineRenderer.SetPosition(1, GetMiddleOfTheScreen(cm.attackRange));
-        //}
+        if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
+        if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isAttackCooldownOver) Attack();
+    }
+
+    private void ChangeWeapon(int newWeaponIndex)
+    {
+        foreach (WeaponBase weapon in weapons)
+        {
+            if (weapon.weaponIndex == newWeaponIndex)
+            {
+                currentWeapon = weapon;
+                currentWeaponIndex = newWeaponIndex;
+                cm.ChangeCrosshairImage(newWeaponIndex);
+
+                //TODO: weapon select sound
+                return;
+            }
+        }
     }
 
     private void ToggleAim()
@@ -95,27 +102,21 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         psd.isAttacking = true;
         StartAttackCooldown();
 
-        //gunLineRenderer.enabled = true;
         //pcam.ToggleAttackSound(true);
+        pam.damageable?.GetDamage(currentWeapon.damage, transform.forward);
+        currentWeapon.Attack();
+        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
 
-        cm.damageable?.GetDamage(gunDamage, transform.forward);
-        await UniTask.WaitForSeconds(rangedAttackAnimationTime);
+        await UniTask.WaitForSeconds(attackAnimationTime);
 
-        //gunLineRenderer.enabled = false;
         psd.isAttacking = false;
-    }
-
-    private Vector3 GetMiddleOfTheScreen(float zValue)
-    {
-        Vector3 viewportMiddle = new Vector3(0.5f, 0.5f, zValue);
-        return mainCamera.ViewportToWorldPoint(viewportMiddle);
     }
 
     private async void StartAttackCooldown()
     {
-        isRangedAttackCooldownOver = false;
-        await UniTask.WaitForSeconds(rangedAttackCooldownTime);
-        isRangedAttackCooldownOver = true;
+        isAttackCooldownOver = false;
+        await UniTask.WaitForSeconds(currentWeapon.cooldownTime);
+        isAttackCooldownOver = true;
     }
 
     public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
@@ -128,21 +129,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         await UniTask.WaitForSeconds(knockBackDuration);
     }
 
-    //TODO: NO REPETITION
-    private async void PlayKnockBackAnimation(Vector3 attackerTransformForward)
+    private void PlayKnockBackAnimation(Vector3 attackerTransformForward)
     {
-        float animationSpeed = knockBackAmount / knockBackDuration;
-        float movingDistance = 0f;
 
-        while (movingDistance < knockBackAmount)
-        {
-            movingDistance += Time.deltaTime * animationSpeed;
-
-            Vector3 tempPosition = transform.position + attackerTransformForward * (Time.deltaTime * animationSpeed);
-            transform.position = tempPosition;
-
-            await UniTask.NextFrame();
-        }
     }
 
     private bool CheckForDeath()

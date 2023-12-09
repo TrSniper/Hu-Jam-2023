@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 9041730811728409005}
   - component: {fileID: 8544608604142644979}
   - component: {fileID: 7017161923613451057}
+  - component: {fileID: 8977488157403192514}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -265,6 +266,7 @@ MonoBehaviour:
   lookInput: {x: 0, y: 0}
   moveInput: {x: 0, y: 0}
   isCombatModeKeyDown: 0
+  changeWeaponInput: 0
   isRunKey: 0
   isDashKeyDown: 0
   isJumpKeyDown: 0
@@ -390,7 +392,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactRange: 5
   attackRange: 40
-  opacity: 0.3
   canInteract: 0
   canAttack: 0
   distanceToHitTarget: 0
@@ -408,12 +409,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   gunDamage: 5
-  gunLineOutTransform: {fileID: 0}
   rangedAttackCooldownTime: 1
   aimModeSensitivityModifier: 0.5
   knockBackAmount: 5
   knockBackDuration: 0.2
-  isCombatMode: 0
+  weapons: []
+  currentWeapon: {fileID: 0}
+  currentWeaponIndex: 0
+--- !u!114 &8977488157403192514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502502903578126880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a39ff7a0fed6247bcb7b7a290fe2c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opacity: 0.3
+  crosshairSprites:
+  - {fileID: 21300000, guid: f6e67c8ecafa69043a6904bb0cc33cee, type: 3}
+  - {fileID: 21300000, guid: f6e67c8ecafa69043a6904bb0cc33cee, type: 3}
+  - {fileID: 21300000, guid: 728f3791685a9074fa3fb6010b4add4f, type: 3}
+  - {fileID: 21300000, guid: da2293691e5756c499fa0c2c33371039, type: 3}
+  - {fileID: 21300000, guid: 4574161e4e44a4c4d961d912d9458294, type: 3}
+  crosshairImage: {fileID: 0}
+  currentCrosshairSpriteIndex: 0
 --- !u!1 &4889461771982152269
 GameObject:
   m_ObjectHideFlags: 0

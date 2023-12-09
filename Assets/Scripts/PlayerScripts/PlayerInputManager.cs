@@ -11,6 +11,8 @@ public class PlayerInputManager : MonoBehaviour
     public Vector2 moveInput;
 
     public bool isCombatModeKeyDown;
+    public float changeWeaponInput;
+
     public bool isRunKey;
     public bool isDashKeyDown;
 
@@ -41,6 +43,8 @@ public class PlayerInputManager : MonoBehaviour
         moveInput = pia.Player.Movement.ReadValue<Vector2>();
 
         isCombatModeKeyDown = pia.Player.CombatMode.WasPressedThisFrame();
+        changeWeaponInput = pia.Player.ChangeWeapon.ReadValue<float>();
+
         isRunKey = pia.Player.Run.IsPressed();
         isDashKeyDown = pia.Player.Dash.WasPressedThisFrame();
 

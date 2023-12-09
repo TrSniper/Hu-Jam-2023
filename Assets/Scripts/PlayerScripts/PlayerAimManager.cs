@@ -1,12 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class CrosshairManager : MonoBehaviour
+public class PlayerAimManager : MonoBehaviour
 {
     [Header("Assign")]
     [SerializeField] private float interactRange = 5f;
     public float attackRange = 40f;
-    [SerializeField] [Range(0, 1)] private float opacity = 0.3f;
 
     [Header("Info - No Touch")]
     public bool canInteract;
@@ -18,25 +16,18 @@ public class CrosshairManager : MonoBehaviour
     public IInteractable previousInteractable;
 
     private PlayerStateData psd;
+    private CrosshairManager cm;
     private Camera cam;
-    private Image crosshairImage;
 
     private RaycastHit crosshairHit;
     private Ray crosshairRay;
-    private int layerMask = ~(1 << 7); //evil bit hack
-
-    private Color temporaryColor;
+    private int layerMask = ~(1 << 7); //evil bit hack: every layer except layer 7
 
     private void Awake()
     {
         psd = GetComponent<PlayerStateData>();
+        cm = GetComponent<CrosshairManager>();
         cam = Camera.main;
-        crosshairImage = GetComponentInChildren<Image>();
-
-        //Default value
-        temporaryColor = Color.white;
-        temporaryColor.a = opacity;
-        crosshairImage.color = temporaryColor;
     }
 
     private void Update()
@@ -44,7 +35,6 @@ public class CrosshairManager : MonoBehaviour
         if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
 
         CastRay();
-        HandleCrosshairColor();
 
         #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.P)) Debug.Log(crosshairHit.collider.gameObject.name);
@@ -53,7 +43,7 @@ public class CrosshairManager : MonoBehaviour
 
     private void CastRay()
     {
-        crosshairRay = cam.ScreenPointToRay(crosshairImage.rectTransform.position);
+        crosshairRay = cam.ScreenPointToRay(cm.crosshairImage.rectTransform.position);
 
         canInteract = false;
         canAttack = false;
@@ -81,31 +71,5 @@ public class CrosshairManager : MonoBehaviour
                 if (canAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
         }
-    }
-
-    private void HandleCrosshairColor()
-    {
-        //TODO: DON'T DETECT DEAD ENEMIES
-
-        //We can not directly change crosshairImage.color.a
-        //We can only assign a color variable to it. Therefore we need a temporary color variable..
-        //..to make changes upon and finally assign it
-
-        temporaryColor = Color.white;
-
-        if (canInteract)
-        {
-            temporaryColor.a = 1f;
-        }
-
-        else if (canAttack && psd.isAiming)
-        {
-            temporaryColor = Color.red;
-            temporaryColor.a = 1f;
-        }
-
-        else temporaryColor.a = opacity;
-
-        crosshairImage.color = temporaryColor;
     }
 }
