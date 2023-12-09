@@ -29,7 +29,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private bool isRangedAttackCooldownOver = true;
     private float rangedAttackAnimationTime;
 
-    private bool isCombatMode;
+    public bool isCombatMode;
 
     public event Action<int> OnHealthChanged;
     public static event Action OnPlayerDeath;
@@ -51,8 +51,12 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (pim.isCombatModeKeyDown) isCombatMode = !isCombatMode;
-        if (!isCombatMode) return;
+        //if (pim.isCombatModeKeyDown)
+        //{
+        //    isCombatMode = !isCombatMode;
+        //    if (psd.isAiming) ToggleAim();
+        //}
+        //if (!isCombatMode) return;
 
         if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
         if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isRangedAttackCooldownOver) Attack();
