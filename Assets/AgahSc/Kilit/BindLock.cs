@@ -28,7 +28,7 @@ public class BindLock : MonoBehaviour, ILock
     void CheckForBindKey() // use to check for key
     {
         foreach (var key in PlayerKeyManager.instance.bindLockKeys)
-        {
+        {   
             if (key.GetKeyType() == type)
             {
                 foundKey = true;

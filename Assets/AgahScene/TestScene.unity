@@ -6155,6 +6155,16 @@ PrefabInstance:
       propertyPath: lookAtTargetTransform
       value: 
       objectReference: {fileID: 2005384884}
+    - target: {fileID: 1852688846917625561, guid: 0ef04fa99dc6e3f41bbbe3840c319184,
+        type: 3}
+      propertyPath: aimLookAtTargetTransform
+      value: 
+      objectReference: {fileID: 2005384884}
+    - target: {fileID: 1852688846917625561, guid: 0ef04fa99dc6e3f41bbbe3840c319184,
+        type: 3}
+      propertyPath: defaultLookAtTargetTransform
+      value: 
+      objectReference: {fileID: 2005384884}
     - target: {fileID: 5964472628589020030, guid: 0ef04fa99dc6e3f41bbbe3840c319184,
         type: 3}
       propertyPath: m_LocalPosition.x

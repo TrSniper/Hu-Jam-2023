@@ -7,7 +7,7 @@ public class PuzzleManager : MonoBehaviour
 {
     [SerializeField] List<PuzzleSolveTrigger> triggers;
     //[SerializeField] event Action OnPuzzleSolve; //puzzle çözülünce ne mesajý verilir deðiþebilir ve bunu nasý implementlerim öðrenmem lazým
-    IEnumerator CheckForAllPuzzlesSolved()
+    void CheckForAllPuzzlesSolved()
     {
         float solvedPuzzlesCount = 0;
         foreach (var trigger in triggers)
@@ -16,8 +16,7 @@ public class PuzzleManager : MonoBehaviour
         }
         if(solvedPuzzlesCount == triggers.Count)
         {
-            return null; // daha bitmedi iþte
+            //OnAllPuzzlesComplete?.Invoke();
         }
-        else return null;
     }
 }
