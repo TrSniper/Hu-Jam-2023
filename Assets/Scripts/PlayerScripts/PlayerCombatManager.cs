@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerCombatManager : MonoBehaviour, IDamageable
 {
-    public static event Action OnPlayerDeath;
 
     [Header("Assign")]
     [SerializeField] private int health = 10;
@@ -20,30 +19,31 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private PlayerStateData psd;
     private PlayerInputManager pim;
-    private PlayerAnimationManager pam;
     private CrosshairManager cm;
-    private PlayerCombatAudioManager pcam;
+    //private PlayerCombatAudioManager pcam;
 
     private Camera mainCamera;
     private CameraController cameraController;
-    private LineRenderer gunLineRenderer;
+    //private LineRenderer gunLineRenderer;
 
     private bool isRangedAttackCooldownOver = true;
     private float rangedAttackAnimationTime;
 
+    private bool isCombatMode;
+
     public event Action<int> OnHealthChanged;
+    public static event Action OnPlayerDeath;
 
     private void Awake()
     {
         psd = GetComponent<PlayerStateData>();
         pim = GetComponent<PlayerInputManager>();
-        pam = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
-        pcam = GetComponent<PlayerCombatAudioManager>();
+        //pcam = GetComponent<PlayerCombatAudioManager>();
 
         mainCamera = Camera.main;
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
-        gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
+        //gunLineRenderer = gunLineOutTransform.GetComponent<LineRenderer>();
 
         //Default value
         //rangedAttackAnimationTime = pam.rangedAttackAnimationHalfDuration * 2;
@@ -51,17 +51,17 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        //TODO: MORE UNDERSTANDABLE IF STATEMENTS
+        if (pim.isCombatModeKeyDown) isCombatMode = !isCombatMode;
+        if (!isCombatMode) return;
 
         if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
+        if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isRangedAttackCooldownOver) Attack();
 
-        if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isRangedAttackCooldownOver) RangedAttack();
-
-        if (gunLineRenderer.enabled)
-        {
-            gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
-            gunLineRenderer.SetPosition(1, GetMiddleOfTheScreen(40f));  //TODO: 40f IS RANGEDATTACK RANGE, MAKE IT VARIABLE
-        }
+        //if (gunLineRenderer.enabled)
+        //{
+        //    gunLineRenderer.SetPosition(0, gunLineOutTransform.position);
+        //    gunLineRenderer.SetPosition(1, GetMiddleOfTheScreen(cm.attackRange));
+        //}
     }
 
     private void ToggleAim()
@@ -69,10 +69,11 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         if (!psd.isAiming)
         {
             cameraController.ChangeCameraFov(CameraController.FovMode.AimFov);
+
             psd.isAiming = true;
             PlayerInputManager.sensitivity *= aimModeSensitivityModifier;
 
-            pcam.ToggleAimSound(true);
+            //pcam.ToggleAimSound(true);
         }
 
         else
@@ -81,22 +82,22 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
             psd.isAiming = false;
             PlayerInputManager.sensitivity /= aimModeSensitivityModifier;
 
-            pcam.ToggleAimSound(true);
+            //pcam.ToggleAimSound(true);
         }
     }
 
-    private async void RangedAttack()
+    private async void Attack()
     {
         psd.isAttacking = true;
-        StartRangedAttackCooldown();
+        StartAttackCooldown();
 
-        gunLineRenderer.enabled = true;
-        pcam.ToggleAttackSound(true);
+        //gunLineRenderer.enabled = true;
+        //pcam.ToggleAttackSound(true);
 
         cm.damageable?.GetDamage(gunDamage, transform.forward);
         await UniTask.WaitForSeconds(rangedAttackAnimationTime);
 
-        gunLineRenderer.enabled = false;
+        //gunLineRenderer.enabled = false;
         psd.isAttacking = false;
     }
 
@@ -106,7 +107,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         return mainCamera.ViewportToWorldPoint(viewportMiddle);
     }
 
-    private async void StartRangedAttackCooldown()
+    private async void StartAttackCooldown()
     {
         isRangedAttackCooldownOver = false;
         await UniTask.WaitForSeconds(rangedAttackCooldownTime);
@@ -144,7 +145,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     {
         if (health <= 0)
         {
-            pcam.ToggleDeathSound(true);
+            //pcam.ToggleDeathSound(true);
             health = 10;
             OnHealthChanged?.Invoke(10);
             OnPlayerDeath?.Invoke();
@@ -152,7 +153,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         }
 
         //else
-        pcam.ToggleGetHitSound(true);
+        //pcam.ToggleGetHitSound(true);
         return false;
     }
 

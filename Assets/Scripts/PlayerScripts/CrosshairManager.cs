@@ -5,19 +5,13 @@ public class CrosshairManager : MonoBehaviour
 {
     [Header("Assign")]
     [SerializeField] private float interactRange = 5f;
-    [SerializeField] private float rangeAttackRange = 40f;
+    public float attackRange = 40f;
     [SerializeField] [Range(0, 1)] private float opacity = 0.3f;
-    [SerializeField] private Vector3 overlapBoxHalfExtends = new Vector3(0.1f, 0.5f, 0.1f);
-    [SerializeField] private float overlapSphereSize = 0.6f;
-    [SerializeField] private Transform overlapBoxCenterTransform;
-    [SerializeField] private Transform overlapSphereCenterTransform;
 
     [Header("Info - No Touch")]
     public bool canInteract;
-    public bool canMeleeAttack;
-    public bool canRangedAttack;
+    public bool canAttack;
     public float distanceToHitTarget;
-    public Collider[] overlapColliders;
 
     public IDamageable damageable;
     public IInteractable interactable;
@@ -50,27 +44,24 @@ public class CrosshairManager : MonoBehaviour
         if (psd.playerMainState != PlayerStateData.PlayerMainState.Normal) return;
 
         CastRay();
-        OverlapBoxOrSphere();
         HandleCrosshairColor();
 
         #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.G)) Debug.Log(crosshairHit.collider.gameObject.name);
+        if (Input.GetKeyDown(KeyCode.P)) Debug.Log(crosshairHit.collider.gameObject.name);
         #endif
     }
 
-    //TODO: MORE FLEXIBLE CODE
     private void CastRay()
     {
         crosshairRay = cam.ScreenPointToRay(crosshairImage.rectTransform.position);
 
         canInteract = false;
-        canMeleeAttack = false;
-        canRangedAttack = false;
+        canAttack = false;
 
         damageable = null;
         interactable = null;
 
-        if (Physics.Raycast(crosshairRay, out crosshairHit, rangeAttackRange, layerMask))
+        if (Physics.Raycast(crosshairRay, out crosshairHit, attackRange, layerMask))
         {
             distanceToHitTarget = Vector3.Distance(transform.position, crosshairHit.collider.transform.position);
 
@@ -82,45 +73,12 @@ public class CrosshairManager : MonoBehaviour
                     interactable = crosshairHit.collider.GetComponentInChildren<IInteractable>();
                     previousInteractable = interactable;
                 }
-
-                canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canRangedAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
 
-            else if (distanceToHitTarget < rangeAttackRange)
+            if (distanceToHitTarget < attackRange)
             {
-                canRangedAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canRangedAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
-            }
-        }
-    }
-
-    private void OverlapBoxOrSphere()
-    {
-        //Don't set damageable to null. 2 reason: 1- There is no need, CastRay() does it every frame for this method. 2- It deletes ranged attack target..
-        //..which detected in the CastRay() method
-
-        overlapColliders = Physics.OverlapSphere(overlapSphereCenterTransform.position, overlapSphereSize);
-        foreach (Collider item in overlapColliders)
-        {
-            if (item.CompareTag("Enemy"))
-            {
-                canMeleeAttack = true;
-                damageable = item.GetComponent<IDamageable>();
-                break;
-            }
-        }
-
-        {
-            overlapColliders = Physics.OverlapBox(overlapBoxCenterTransform.position, overlapBoxHalfExtends);
-            foreach (Collider item in overlapColliders)
-            {
-                if (item.CompareTag("Enemy"))
-                {
-                    canMeleeAttack = true;
-                    damageable = item.GetComponent<IDamageable>();
-                    break;
-                }
+                canAttack = crosshairHit.collider.CompareTag("Enemy");
+                if (canAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
             }
         }
     }
@@ -135,33 +93,19 @@ public class CrosshairManager : MonoBehaviour
 
         temporaryColor = Color.white;
 
-        if (canMeleeAttack)
+        if (canInteract)
+        {
+            temporaryColor.a = 1f;
+        }
+
+        else if (canAttack && psd.isAiming)
         {
             temporaryColor = Color.red;
-            temporaryColor.a = 1f;
-        }
-
-        else if (canInteract)
-        {
-            temporaryColor.a = 1f;
-        }
-
-        else if (canRangedAttack && psd.isAiming)
-        {
-            temporaryColor = Color.blue;
             temporaryColor.a = 1f;
         }
 
         else temporaryColor.a = opacity;
 
         crosshairImage.color = temporaryColor;
-    }
-
-    private void OnDrawGizmos()
-   {
-       Gizmos.color = Color.red;
-
-       Gizmos.DrawWireSphere(overlapSphereCenterTransform.position, overlapSphereSize);
-       Gizmos.DrawWireCube(overlapBoxCenterTransform.position, overlapBoxHalfExtends * 2);
     }
 }

@@ -9,12 +9,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float verticalSpeed = 5f;
     [SerializeField] private float rotatingSpeed = 0.1f;
-    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float acceleration = 15f;
     [SerializeField] private float deceleration = 15f;
     [SerializeField] private float zeroGravityAcceleration = 4f;
 
     [Header("Info - No Touch")]
-    [SerializeField] private float movingSpeed;
+    [SerializeField] private float leftRightSpeed;
+    [SerializeField] private float forwardBackwardSpeed;
     [SerializeField] private float verticalSpeedReal;
     private Vector3 movingDirection;
 
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
 
     private IEnumerator walkRunSpeedRoutine;
+    private IEnumerator leftRightSpeedRoutine;
+    private IEnumerator forwardBackwardSpeedRoutine;
     private IEnumerator verticalSpeedRoutine;
 
     private void Awake()
@@ -37,9 +40,15 @@ public class PlayerController : MonoBehaviour
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
         cameraTransform = cameraController.transform;
 
-        //Default Value
-        movingSpeed = walkingSpeed;
+        //Default Values
+        forwardBackwardSpeed = walkingSpeed;
+        leftRightSpeed = walkingSpeed;
         verticalSpeedReal = 0;
+
+        //Defaults
+        leftRightSpeedRoutine = ChangeLeftRightSpeed(0f);
+        forwardBackwardSpeedRoutine = ChangeForwardBackwardSpeed(0f);
+        verticalSpeedRoutine = ChangeVerticalSpeed(true, 0f);
     }
 
     private void Update()
@@ -58,6 +67,7 @@ public class PlayerController : MonoBehaviour
         HandleVerticalMovement();
 
         HandleRotation();
+        HandleMovementSpeeds();
     }
 
     private void FixedUpdate()
@@ -82,31 +92,11 @@ public class PlayerController : MonoBehaviour
             psd.isWalking = false;
 
             cameraController.ChangeCameraFov(CameraController.FovMode.RunningFov);
-
-            if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-            walkRunSpeedRoutine = ChangeMovingSpeed(true, runningSpeed);
-            StartCoroutine(walkRunSpeedRoutine);
         }
 
         //Running or idle to walking
         else if (psd.isMoving && !pim.isRunKey && !psd.isWalking && !psd.isAiming)
         {
-            //From running
-            if (psd.isRunning)
-            {
-                if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-                walkRunSpeedRoutine = ChangeMovingSpeed(false, walkingSpeed);
-                StartCoroutine(walkRunSpeedRoutine);
-            }
-
-            //From idle
-            else
-            {
-                if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-                walkRunSpeedRoutine = ChangeMovingSpeed(true, walkingSpeed);
-                StartCoroutine(walkRunSpeedRoutine);
-            }
-
             psd.isRunning = false;
             psd.isWalking = true;
 
@@ -114,16 +104,46 @@ public class PlayerController : MonoBehaviour
         }
 
         //Moving to idle
-        else if (!psd.isMoving)
+        else if (!psd.isMoving && !psd.isAiming && (psd.isRunning || psd.isWalking))
         {
             psd.isRunning = false;
             psd.isWalking = false;
 
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
+        }
+    }
 
-            if (walkRunSpeedRoutine != null) StopCoroutine(walkRunSpeedRoutine);
-            walkRunSpeedRoutine = ChangeMovingSpeed(false, 0f);
-            StartCoroutine(walkRunSpeedRoutine);
+    private void HandleMovementSpeeds()
+    {
+        float movingSpeed;
+        if (psd.isIdle) movingSpeed = 0f;
+        else if (psd.isWalking) movingSpeed = walkingSpeed;
+        else movingSpeed = runningSpeed;
+
+        //TODO: shit
+
+        if ((pim.moveInput.x > 0 && leftRightSpeed != movingSpeed && !isChangeLeftRightSpeedRunningIncreasing) ||
+            (pim.moveInput.x < 0 && leftRightSpeed != -movingSpeed && !isChangeLeftRightSpeedRunningDecreasing) ||
+            (pim.moveInput.x == 0 && leftRightSpeed != 0f && !isChangeLeftRightSpeedRunningDecreasing))
+        {
+            StopCoroutine(leftRightSpeedRoutine);
+            isChangeLeftRightSpeedRunningIncreasing = false;
+            isChangeLeftRightSpeedRunningDecreasing = false;
+
+            leftRightSpeedRoutine = ChangeLeftRightSpeed(movingSpeed * pim.moveInput.x);
+            StartCoroutine(leftRightSpeedRoutine);
+        }
+
+        if ((pim.moveInput.y > 0 && forwardBackwardSpeed != movingSpeed && !isChangeForwardBackwardSpeedRunningIncreasing) ||
+            (pim.moveInput.y < 0 && forwardBackwardSpeed != -movingSpeed && !isChangeForwardBackwardSpeedRunningDecreasing) ||
+            (pim.moveInput.y == 0 && forwardBackwardSpeed != 0f && !isChangeForwardBackwardSpeedRunningDecreasing))
+        {
+            StopCoroutine(forwardBackwardSpeedRoutine);
+            isChangeForwardBackwardSpeedRunningIncreasing = false;
+            isChangeForwardBackwardSpeedRunningDecreasing = false;
+
+            forwardBackwardSpeedRoutine = ChangeForwardBackwardSpeed(movingSpeed * pim.moveInput.y);
+            StartCoroutine(forwardBackwardSpeedRoutine);
         }
     }
 
@@ -156,7 +176,7 @@ public class PlayerController : MonoBehaviour
         {
             if (pim.isJumpKeyDown)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(true, verticalSpeed);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -166,7 +186,7 @@ public class PlayerController : MonoBehaviour
 
             else if (pim.isJumpKeyUp)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(false, 0);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -181,7 +201,7 @@ public class PlayerController : MonoBehaviour
         {
             if (pim.isDescendKeyDown)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(false, -verticalSpeed);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -191,7 +211,7 @@ public class PlayerController : MonoBehaviour
 
             else if (pim.isDescendKeyUp)
             {
-                if (verticalSpeedRoutine != null) StopCoroutine(verticalSpeedRoutine);
+                StopCoroutine(verticalSpeedRoutine);
                 verticalSpeedRoutine = ChangeVerticalSpeed(true, 0);
                 StartCoroutine(verticalSpeedRoutine);
 
@@ -213,7 +233,8 @@ public class PlayerController : MonoBehaviour
             movingDirection.y = 0f;
         }
 
-        rb.velocity = new Vector3(movingDirection.x * movingSpeed, rb.velocity.y, movingDirection.z * movingSpeed);
+        Vector3 velocity = cameraTransform.right * leftRightSpeed + cameraTransform.forward * forwardBackwardSpeed;
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
     }
 
     private void HandleRotation()
@@ -229,29 +250,72 @@ public class PlayerController : MonoBehaviour
         else if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
     }
 
-    private IEnumerator ChangeMovingSpeed(bool isIncreasing, float movingSpeedToReach)
+    #region ChangeSpeed
+
+    [Header("Info - No Touch")]
+    [SerializeField] private bool isChangeLeftRightSpeedRunningIncreasing;
+    [SerializeField] private bool isChangeLeftRightSpeedRunningDecreasing;
+    [SerializeField] private bool isChangeForwardBackwardSpeedRunningIncreasing;
+    [SerializeField] private bool isChangeForwardBackwardSpeedRunningDecreasing;
+
+    private IEnumerator ChangeLeftRightSpeed(float leftRightSpeedToReach)
     {
-        if (isIncreasing)
+        //Debug.Log("left right: " + (forwardBackwardSpeed < leftRightSpeedToReach));
+        if (leftRightSpeed < leftRightSpeedToReach)
         {
-            while (movingSpeed < movingSpeedToReach)
+            isChangeLeftRightSpeedRunningIncreasing = true;
+            while (leftRightSpeed < leftRightSpeedToReach)
             {
-                if (GravityManager.isGravityActive) movingSpeed += acceleration * Time.deltaTime;
-                else movingSpeed += zeroGravityAcceleration * Time.deltaTime;
+                if (GravityManager.isGravityActive) leftRightSpeed += acceleration * Time.deltaTime;
+                else leftRightSpeed += zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
+            isChangeLeftRightSpeedRunningIncreasing = false;
         }
 
         else
         {
-            while (movingSpeed > movingSpeedToReach)
+            isChangeLeftRightSpeedRunningDecreasing = true;
+            while (leftRightSpeed > leftRightSpeedToReach)
             {
-                if (GravityManager.isGravityActive) movingSpeed -= deceleration * Time.deltaTime;
-                else movingSpeed -= zeroGravityAcceleration * Time.deltaTime;
+                if (GravityManager.isGravityActive) leftRightSpeed -= deceleration * Time.deltaTime;
+                else leftRightSpeed -= zeroGravityAcceleration * Time.deltaTime;
                 yield return null;
             }
+            isChangeLeftRightSpeedRunningDecreasing = false;
         }
 
-        movingSpeed = movingSpeedToReach;
+        leftRightSpeed = leftRightSpeedToReach;
+    }
+
+    private IEnumerator ChangeForwardBackwardSpeed(float forwardBackwardSpeedToReach)
+    {
+        //Debug.Log("forward backward: " + (forwardBackwardSpeed < forwardBackwardSpeedToReach));
+        if (forwardBackwardSpeed < forwardBackwardSpeedToReach)
+        {
+            isChangeForwardBackwardSpeedRunningIncreasing = true;
+            while (forwardBackwardSpeed < forwardBackwardSpeedToReach)
+            {
+                if (GravityManager.isGravityActive) forwardBackwardSpeed += acceleration * Time.deltaTime;
+                else forwardBackwardSpeed += zeroGravityAcceleration * Time.deltaTime;
+                yield return null;
+            }
+            isChangeForwardBackwardSpeedRunningIncreasing = false;
+        }
+
+        else
+        {
+            isChangeForwardBackwardSpeedRunningDecreasing = true;
+            while (forwardBackwardSpeed > forwardBackwardSpeedToReach)
+            {
+                if (GravityManager.isGravityActive) forwardBackwardSpeed -= deceleration * Time.deltaTime;
+                else forwardBackwardSpeed -= zeroGravityAcceleration * Time.deltaTime;
+                yield return null;
+            }
+            isChangeForwardBackwardSpeedRunningDecreasing = false;
+        }
+
+        forwardBackwardSpeed = forwardBackwardSpeedToReach;
     }
 
     private IEnumerator ChangeVerticalSpeed(bool isIncreasing, float verticalSpeedToReach)
@@ -276,4 +340,6 @@ public class PlayerController : MonoBehaviour
 
         verticalSpeedReal = verticalSpeedToReach;
     }
+
+    #endregion
 }

@@ -1,11 +1,14 @@
 using System.Collections;
 using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 
 [ExecuteAlways]
 public class CameraController : MonoBehaviour
 {
     [Header("Follow and Look At")]
+    [SerializeField] private Transform defaultLookAtTargetTransform;
+    [SerializeField] private Transform aimLookAtTargetTransform;
     [SerializeField] private Transform lookAtTargetTransform;
     [SerializeField] private Transform followTargetTransform;
     [SerializeField] private Vector3 followOffset;
@@ -19,11 +22,15 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float defaultFovValue = 60f;
     [SerializeField] private float aimFovValue = 40f;
     [SerializeField] private float runningFovValue = 80f;
+    [SerializeField] private float aimModeDuration = 1f;
+    public bool isAimMode;
 
     private PlayerStateData psd;
     private PlayerInputManager pim;
     private CinemachineVirtualCamera cam;
+
     private IEnumerator fovChangingRoutine;
+    private Tween aimModeTween;
 
     private Vector3 followTargetPreviousPosition;
     private Vector3 followTargetPositionDifference;
@@ -38,6 +45,7 @@ public class CameraController : MonoBehaviour
         fovChangingRoutine = ChangeCameraFovRoutine(0);
         transform.position = followTargetTransform.position + followOffset;
         followTargetPreviousPosition = followTargetTransform.position;
+        aimModeTween = lookAtTargetTransform.DOLocalMove(defaultLookAtTargetTransform.localPosition, aimModeDuration);
     }
 
     private void LateUpdate()
@@ -49,6 +57,8 @@ public class CameraController : MonoBehaviour
         followTargetPreviousPosition = followTargetTransform.position;
 
         ControlCamera();
+
+        if (pim.isCombatModeKeyDown) ChangeCameraMode();
     }
 
     private void ControlCamera()
@@ -65,6 +75,23 @@ public class CameraController : MonoBehaviour
         }
 
         transform.LookAt(lookAtTargetTransform);
+    }
+
+    private void ChangeCameraMode()
+    {
+        if (isAimMode)
+        {
+            isAimMode = false;
+            aimModeTween.Kill();
+            aimModeTween = lookAtTargetTransform.DOLocalMove(defaultLookAtTargetTransform.localPosition, aimModeDuration);
+        }
+
+        else
+        {
+            isAimMode = true;
+            aimModeTween.Kill();
+            aimModeTween = lookAtTargetTransform.DOLocalMove(aimLookAtTargetTransform.localPosition, aimModeDuration);
+        }
     }
 
     public enum FovMode

@@ -10,6 +10,7 @@ public class PlayerInputManager : MonoBehaviour
     public Vector2 lookInput;
     public Vector2 moveInput;
 
+    public bool isCombatModeKeyDown;
     public bool isRunKey;
     public bool isDashKeyDown;
 
@@ -39,6 +40,7 @@ public class PlayerInputManager : MonoBehaviour
         lookInput.y *= -1; //Fixes y axis inversion
         moveInput = pia.Player.Movement.ReadValue<Vector2>();
 
+        isCombatModeKeyDown = pia.Player.CombatMode.WasPressedThisFrame();
         isRunKey = pia.Player.Run.IsPressed();
         isDashKeyDown = pia.Player.Dash.WasPressedThisFrame();
 
@@ -47,9 +49,9 @@ public class PlayerInputManager : MonoBehaviour
         isDescendKeyDown = pia.Player.Descend.WasPressedThisFrame();
         isDescendKeyUp = pia.Player.Descend.WasReleasedThisFrame();
 
-        //isAimKeyDown = pia.Player.Aim.WasPressedThisFrame();
-        //isAimKeyUp = pia.Player.Aim.WasReleasedThisFrame();
-        //isAttackKeyDown = pia.Player.Attack.WasPressedThisFrame();
+        isAimKeyDown = pia.Player.Aim.WasPressedThisFrame();
+        isAimKeyUp = pia.Player.Aim.WasReleasedThisFrame();
+        isAttackKeyDown = pia.Player.Attack.WasPressedThisFrame();
 
         isGravityKeyDown = pia.Player.Gravity.WasPressedThisFrame();
         //isInteractKeyDown = pia.Player.Interact.WasPressedThisFrame();
