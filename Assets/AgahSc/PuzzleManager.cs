@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] List<PuzzleSolveTrigger> triggers;
+    //[SerializeField] event Action OnPuzzleSolve; //puzzle çözülünce ne mesajý verilir deðiþebilir ve bunu nasý implementlerim öðrenmem lazým
+    IEnumerator CheckForAllPuzzlesSolved()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        float solvedPuzzlesCount = 0;
+        foreach (var trigger in triggers)
+        {
+            if(trigger.puzzleSolved) solvedPuzzlesCount++;
+        }
+        if(solvedPuzzlesCount == triggers.Count)
+        {
+            return null;
+        }
+        else return null;
     }
 }

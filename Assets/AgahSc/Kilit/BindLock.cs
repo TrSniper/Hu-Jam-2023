@@ -5,13 +5,14 @@ using UnityEngine;
 public class BindLock : MonoBehaviour, ILock
 {
     [SerializeField]BindLockType type;
-    Rigidbody rb;
+    [Tooltip("The Bindlocked gameObjects rigidbody must be referenced here")]
+    [SerializeField]Rigidbody rb;
 
     public bool isBound = true;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
@@ -19,13 +20,7 @@ public class BindLock : MonoBehaviour, ILock
     {
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.None;
+        isBound = false;
+        Debug.Log("BindLock Unlocked");
     }
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        //if has the bindlock key
-    }
-    */
-
 }

@@ -5,15 +5,10 @@ using UnityEngine;
 public class DoorLock : MonoBehaviour,ILock
 {
     public GameObject Door;
-    private void OnTriggerEnter(Collider other)
-    {
-        //if(other.gameObject) anahtarý varsa
-        GetUnlocked();
-    }
-
     public void GetUnlocked()
     {
         DoorsOpen();
+        Debug.Log("DoorLock Unlocked");
     }
 
     void DoorsOpen()
