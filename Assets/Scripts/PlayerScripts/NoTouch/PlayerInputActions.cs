@@ -107,6 +107,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CombatMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""adbbd64d-4974-4d95-9c33-d2c5f4faaa28"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdb6d292-be85-4baa-9014-fd5939d6dc27"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CombatMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_CombatMode = m_Player.FindAction("CombatMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_CombatMode;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -352,6 +374,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @CombatMode => m_Wrapper.m_Player_CombatMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +411,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @CombatMode.started += instance.OnCombatMode;
+            @CombatMode.performed += instance.OnCombatMode;
+            @CombatMode.canceled += instance.OnCombatMode;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -419,6 +445,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @CombatMode.started -= instance.OnCombatMode;
+            @CombatMode.performed -= instance.OnCombatMode;
+            @CombatMode.canceled -= instance.OnCombatMode;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -447,5 +476,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnCombatMode(InputAction.CallbackContext context);
     }
 }

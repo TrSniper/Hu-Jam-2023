@@ -29,6 +29,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private bool isRangedAttackCooldownOver = true;
     private float rangedAttackAnimationTime;
 
+    private bool isCombatMode;
+
     public event Action<int> OnHealthChanged;
     public static event Action OnPlayerDeath;
 
@@ -49,8 +51,10 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
+        if (pim.isCombatModeKeyDown) isCombatMode = !isCombatMode;
+        if (!isCombatMode) return;
 
+        if (pim.isAimKeyDown || pim.isAimKeyUp) ToggleAim();
         if (psd.isAiming && pim.isAttackKeyDown && !psd.isAttacking && isRangedAttackCooldownOver) Attack();
 
         //if (gunLineRenderer.enabled)
@@ -75,7 +79,6 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         else
         {
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
-
             psd.isAiming = false;
             PlayerInputManager.sensitivity /= aimModeSensitivityModifier;
 
