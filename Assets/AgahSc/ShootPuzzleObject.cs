@@ -20,8 +20,8 @@ public class ShootPuzzleObject : MonoBehaviour
 
     void MovePuzzleObject() // move object based on direction
     {
-        //rb.velocity = Vector3.zero; //first stop it
-        //rb.Sleep(); // same thing?
+        rb.velocity = Vector3.zero; transform.rotation = Quaternion.identity;//first stop it
+        //rb.Sleep(); same thing?
         switch (moveDir)
         {
             case MoveDir.Left:     rb.AddRelativeForce(-transform.right * forceMultiplier, ForceMode.VelocityChange); break;
@@ -36,7 +36,7 @@ public class ShootPuzzleObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision);
-        //if (collision.gameObject.layer != bulletLayer) return;
+        if(collision.gameObject.layer != bulletLayer) return;
         MovePuzzleObject();
         Debug.Log("Object is supposed to move");
     }
