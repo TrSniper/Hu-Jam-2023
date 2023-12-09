@@ -16,7 +16,7 @@ public class PuzzleManager : MonoBehaviour
         }
         if(solvedPuzzlesCount == triggers.Count)
         {
-            return null;
+            return null; // daha bitmedi iþte
         }
         else return null;
     }

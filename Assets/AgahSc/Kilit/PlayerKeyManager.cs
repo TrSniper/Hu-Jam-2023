@@ -3,23 +3,12 @@ using UnityEngine;
 
 public class PlayerKeyManager : MonoBehaviour
 {
-    public bool HasKey { get; private set; }
-
-    private List<Key> keys = new List<Key>();
-
-    private void OnTriggerEnter(Collider other)
+    public static PlayerKeyManager instance;
+    
+    public List<BindKey> bindLockKeys = new List<BindKey>();
+    public List<DoorKey> doorLockKeys = new List<DoorKey>();
+    private void Awake()
     {
-        if (!(other.gameObject.layer == 8))
-            return;
-        keys.Add(other.gameObject.GetComponent<Key>());
-        HasKey = true;
-        Debug.Log("player has a key now");
-        Debug.Log(HasKey);
+        instance = this;
     }
-    //private void Update()
-    //{
-    //    if (!(keys.Count >= 1))
-    //        return;
-    //    HasKey = true;
-    //}
 }
