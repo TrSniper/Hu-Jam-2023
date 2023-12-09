@@ -8,7 +8,9 @@ public class BindLock : MonoBehaviour, ILock
     [Tooltip("The Bindlocked gameObjects rigidbody must be referenced here")]
     [SerializeField]Rigidbody rb;
 
+    [Tooltip("Don't touch...")]
     public bool isBound = true;
+    private bool foundKey = false;
 
     void Start()
     {
@@ -23,4 +25,24 @@ public class BindLock : MonoBehaviour, ILock
         isBound = false;
         Debug.Log("BindLock Unlocked");
     }
+    void CheckForBindKey() // use to check for key
+    {
+        foreach (var key in PlayerKeyManager.instance.bindLockKeys)
+        {
+            if (key.GetKeyType() == type)
+            {
+                foundKey = true;
+                GetUnlocked();
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!foundKey) CheckForBindKey();
+        if (!(other.gameObject.layer == 7))
+            return;
+        GetUnlocked();
+    }
+
 }
