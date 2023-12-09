@@ -4,17 +4,6 @@ public class ProjectileWeaponBase : WeaponBase
 {
     [Header("Assign")] [SerializeField] protected GameObject projectile;
 
-    private Transform playerTransform;
-    private Transform cameraTransform;
-
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-
-        playerTransform = GameObject.Find("Player").transform;
-        cameraTransform = GameObject.Find("PlayerCamera").transform;
-    }
-
     public override void Attack()
     {
         base.Attack();
