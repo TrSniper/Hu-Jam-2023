@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6690520253129860617}
   - component: {fileID: 5019537947418968580}
   - component: {fileID: 4930089273672460772}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -120,18 +120,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf520209f6693c458fe86cdaac6f216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadStart: 0
   sightWidth: 20
   sightHeight: 2
   hearRange: 30
-  attackRange: 7
-  walkingSpeed: 2
-  runningSpeed: 5
+  passiveSpeed: 5
+  alertSpeed: 10
+  aggressiveSpeed: 10
   patrolRoute: {fileID: 0}
-  navMeshAgent: {fileID: 0}
   isPlayerInHearRange: 0
   isPlayerInSightRange: 0
-  isPlayerInAttackRange: 0
-  didEncounterPlayer: 0
+  canSeePlayer: 0
+  enemiesInSightRange: []
+  enemiesInHearRange: []
+  playerTransform: {fileID: 0}
+  navMeshAgent: {fileID: 0}
+  playerLayer: 128
+  enemyLayer: 2048
+  sightArea: {x: 20, y: 2, z: 20}
+  sightAreaCenter: {x: 20, y: 2, z: 20}
 --- !u!195 &4930089273672460772
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -142,7 +149,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 200
   avoidancePriority: 50
   m_AngularSpeed: 200
@@ -165,8 +172,7 @@ GameObject:
   - component: {fileID: 501909874704013538}
   - component: {fileID: 851263639968657083}
   - component: {fileID: 348387871622606147}
-  - component: {fileID: 8460879496008094860}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,24 +244,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8460879496008094860
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4893944936388512293}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

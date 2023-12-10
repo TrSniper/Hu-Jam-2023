@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerCombatManager : MonoBehaviour, IDamageable
 {
+    public static event Action OnPlayerAttack;
+    public static event Action<int> OnHealthChanged;
+    public static event Action OnPlayerDeath;
+
     [Header("Assign")]
     [SerializeField] private int health = 10;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
@@ -25,9 +29,6 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private bool isAttackCooldownOver = true;
 
     //public bool isCombatMode;
-
-    public event Action<int> OnHealthChanged;
-    public static event Action OnPlayerDeath;
 
     private void Awake()
     {
@@ -116,13 +117,14 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         psd.isAttacking = true;
         StartAttackCooldown();
 
+        OnPlayerAttack?.Invoke();
         //pcam.ToggleAttackSound(true);
+
+        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
         pam.damageable?.GetDamage(currentWeapon.damage, transform.forward);
         currentWeapon.Attack();
-        if (currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
 
         await UniTask.WaitForSeconds(attackAnimationTime);
-
         psd.isAttacking = false;
     }
 

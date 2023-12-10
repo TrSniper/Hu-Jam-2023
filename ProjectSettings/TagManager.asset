@@ -18,7 +18,7 @@ TagManager:
   - KeyLayer
   - BulletLayer
   - PuzzleObjectLayer
-  - 
+  - Enemy
   - 
   - 
   - 
