@@ -4,9 +4,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Assign")]
-    [SerializeField] private float walkingSpeed = 5f;
-    [SerializeField] private float runningSpeed = 8f;
-    [SerializeField] private float jumpSpeed = 10f;
+    public float walkingSpeed = 5f;
+    public float runningSpeed = 8f;
+    [SerializeField] private float jumpSpeed = 5f;
     [SerializeField] private float verticalSpeed = 5f;
     [SerializeField] private float rotatingSpeed = 0.1f;
     [SerializeField] private float acceleration = 15f;
@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float zeroGravityAcceleration = 4f;
 
     [Header("Info - No Touch")]
-    [SerializeField] private float leftRightSpeed;
-    [SerializeField] private float forwardBackwardSpeed;
+    public float leftRightSpeed;
+    public float forwardBackwardSpeed;
     [SerializeField] private float verticalSpeedReal;
     private Vector3 movingDirection;
 
@@ -110,6 +110,13 @@ public class PlayerController : MonoBehaviour
             psd.isWalking = false;
 
             cameraController.ChangeCameraFov(CameraController.FovMode.DefaultFov);
+        }
+
+        //TODO: better fix
+        if (psd.isAiming && psd.isMoving)
+        {
+            psd.isRunning = false;
+            psd.isWalking = true;
         }
     }
 

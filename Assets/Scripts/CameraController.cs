@@ -19,14 +19,14 @@ public class CameraController : MonoBehaviour
 
     [Header("Fov and Aim")]
     [SerializeField] private float fovChangingSpeed = 100f;
-    [SerializeField] private float defaultFovValue = 60f;
-    [SerializeField] private float aimFovValue = 40f;
+    public float defaultFovValue = 60f;
+    public float aimFovValue = 40f;
     [SerializeField] private float runningFovValue = 80f;
     //[SerializeField] private float aimModeDuration = 1f;
 
     private PlayerStateData psd;
     private PlayerInputManager pim;
-    private CinemachineVirtualCamera cam;
+    [Header("Info - No Touch")] public CinemachineVirtualCamera cam;
 
     private IEnumerator fovChangingRoutine;
     private Tween aimModeTween;
