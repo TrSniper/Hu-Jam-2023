@@ -8,12 +8,9 @@ public class PlayerHealthBarManager : MonoBehaviour
     [SerializeField] private Slider healthBar;
     [SerializeField] private TextMeshProUGUI healthText;
 
-    private PlayerCombatManager pcm;
-
     private void Awake()
     {
-        pcm = GetComponent<PlayerCombatManager>();
-        pcm.OnHealthChanged += UpdateHealthBar;
+        PlayerCombatManager.OnHealthChanged += UpdateHealthBar;
 
         //Default value
         UpdateHealthBar(10);

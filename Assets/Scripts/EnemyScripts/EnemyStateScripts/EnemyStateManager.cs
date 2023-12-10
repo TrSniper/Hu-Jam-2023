@@ -3,53 +3,59 @@ using UnityEngine.AI;
 
 public class EnemyStateManager : MonoBehaviour
 {
-    public EnemyBaseState currentState;
+    public bool deadStart;
 
+    public EnemyBaseState currentState;
     public EnemyPassiveState enemyPassiveState = new EnemyPassiveState();
-    public EnemyAgressiveState enemyAgressiveState = new EnemyAgressiveState();
+    public EnemyAggressiveState enemyAggressiveState = new EnemyAggressiveState();
     public EnemyAlertState enemyAlertState = new EnemyAlertState();
     public EnemyPanicState enemyPanicState = new EnemyPanicState();
     public EnemyDeadState enemyDeadState = new EnemyDeadState();
 
-    private int groundLayer = 1 << 6;
-    private int playerLayer = 1 << 7;
-
     [Header("Assign")]
-    [SerializeField] private float sightWidth = 20f;
-    [SerializeField] private float sightHeight = 2f;
-    [SerializeField] private float hearRange = 30f;
-    [SerializeField] private float attackRange = 7f;
-    [SerializeField] private float walkingSpeed = 2f;
-    [SerializeField] private float runningSpeed = 5f;
+    public float sightWidth = 20f;
+    public float sightHeight = 2f;
+    public float hearRange = 30f;
+    public float attackRange = 7f;
+    public float walkingSpeed = 2f;
+    public float runningSpeed = 5f;
 
-    [Header("Patrol")]
-    public PatrolRoute patrolRoute;
+    [Header("Assign - Patrol")] public PatrolRoute patrolRoute;
 
     [Header("No Touch - Info")]
-    public NavMeshAgent navMeshAgent;
-    [SerializeField] private bool isPlayerInHearRange;
-    [SerializeField] private bool isPlayerInSightRange;
+    public bool isPlayerInHearRange;
+    public bool isPlayerInSightRange;
+    public bool canSeePlayer;
     public bool isPlayerInAttackRange;
     public bool didEncounterPlayer;
+    public Collider[] enemiesInSightRange;
+    public Collider[] enemiesInHearRange;
 
-    private Vector3 sightArea;
-    private Vector3 sightAreaCenter;
+    [Header("No Touch - Info")]
+    public Vector3 sightArea;
+    public Vector3 sightAreaCenter;
+
+    [Header("No Touch - Info")]
+    public Transform playerTransform;
+    public NavMeshAgent navMeshAgent;
+    public int playerLayer = 1 << 7;
+    public int enemyLayer = 1 << 11;
 
     private void Awake()
     {
+        playerTransform = GameObject.Find("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        SwitchState(enemyPassiveState);
+
+        if (deadStart) ChangeState(enemyDeadState);
+        else ChangeState(enemyPassiveState);
     }
 
     private void Update()
     {
         currentState.OnUpdate(this);
-
-        isPlayerInHearRange = Physics.CheckSphere(transform.position, hearRange, playerLayer);
-        isPlayerInSightRange = Physics.CheckBox(sightAreaCenter, sightArea / 2 ,Quaternion.identity, playerLayer);
     }
 
-    public void SwitchState(EnemyBaseState newState)
+    public void ChangeState(EnemyBaseState newState)
     {
         currentState = newState;
         currentState.EnterState(this);
@@ -57,9 +63,6 @@ public class EnemyStateManager : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        sightArea = new Vector3(sightWidth, sightHeight, sightWidth);
-        sightAreaCenter = transform.position + transform.forward * ((sightWidth - transform.lossyScale.z) / 2);
-
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(sightAreaCenter, sightArea);
 
