@@ -985,6 +985,7 @@ MonoBehaviour:
   jumpSpeed: 5
   verticalSpeed: 5
   rotatingSpeed: 0.1
+  zeroGravityRotatingSpeed: 0.01
   acceleration: 15
   deceleration: 15
   zeroGravityAcceleration: 4
@@ -1799,7 +1800,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7205016000143138284}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7b9e17f511a8b674e9c1ec35fc4059d3, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 6cb9aa2d6b5d9f444b15a9778b51c89f, type: 3}
   m_Controller: {fileID: 9100000, guid: 3172be97921153c478e69d1203591fae, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

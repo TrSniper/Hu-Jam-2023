@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 5f;
     [SerializeField] private float verticalSpeed = 5f;
     [SerializeField] private float rotatingSpeed = 0.1f;
+    [SerializeField] private float zeroGravityRotatingSpeed = 0.01f;
     [SerializeField] private float acceleration = 15f;
     [SerializeField] private float deceleration = 15f;
     [SerializeField] private float zeroGravityAcceleration = 4f;
@@ -254,7 +255,8 @@ public class PlayerController : MonoBehaviour
             transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, transform.eulerAngles.z);
         }
 
-        else if (psd.isMoving) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
+        else if (psd.isMoving && GravityManager.isGravityActive) transform.forward = Vector3.Slerp(transform.forward, movingDirection, rotatingSpeed);
+        else if (psd.isMoving && !GravityManager.isGravityActive) transform.forward = Vector3.Slerp(transform.forward, movingDirection, zeroGravityRotatingSpeed);
     }
 
     #region ChangeSpeed

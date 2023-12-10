@@ -138,3 +138,4 @@ MonoBehaviour:
   defaultFovValue: 60
   aimFovValue: 40
   runningFovValue: 80
+  cam: {fileID: 0}

@@ -16,6 +16,7 @@ public class PlayerAnimationManager : MonoBehaviour
     [Range(0,1)] public float jumpOrMovementValue;
     public float jumpBlendValueChangeTime = 1f;
     public float jumpAnimationTime = 1f;
+
     private void Awake()
     {
         psd = GetComponent<PlayerStateData>();
@@ -30,18 +31,31 @@ public class PlayerAnimationManager : MonoBehaviour
         //if (pim.isJumpKeyDown) InOutJumpBlendValue();
         //an.SetFloat("JumpOrMovement", jumpOrMovementValue);
 
-        if (psd.isJumping)
+        if (psd.isJumping && GravityManager.isGravityActive)
         {
             an.Play("Jump");
         }
 
         else if (psd.isIdle || psd.isMoving)
         {
-            an.Play("IdleOrMoving");
+            if (GravityManager.isGravityActive) an.Play("IdleOrMoving");
+            else an.Play("ZeroGravityIdleOrMoving");
         }
 
         an.SetFloat("IdleOrMoving", MovingSpeedToIdleAndMoveBlendValue());
         an.SetFloat("WalkOrRun", MovingSpeedToWalkAndRunBlendValue());
+
+        if (psd.isAiming)
+        {
+            an.SetFloat("ForwardOrBackward", SingleDimensionSpeedToSingleDimensionBlendValue(true));
+            an.SetFloat("LeftOrRight", SingleDimensionSpeedToSingleDimensionBlendValue(false));
+        }
+
+        else
+        {
+            an.SetFloat("ForwardOrBackward", 1);
+            an.SetFloat("LeftOrRight", 0);
+        }
 
         an.SetLayerWeight(1, CameraFovToAimLayerWeight());
     }
@@ -51,6 +65,17 @@ public class PlayerAnimationManager : MonoBehaviour
         DOVirtual.Float(0, 1, jumpBlendValueChangeTime, value => jumpOrMovementValue = value).SetEase(Ease.Linear);
         await UniTask.WaitForSeconds(jumpAnimationTime);
         DOVirtual.Float(1, 0, jumpBlendValueChangeTime, value => jumpOrMovementValue = value).SetEase(Ease.Linear);
+    }
+
+    private float SingleDimensionSpeedToSingleDimensionBlendValue(bool isForwardBackward)
+    {
+        float speed;
+        if (isForwardBackward) speed = pc.forwardBackwardSpeed;
+        else speed = pc.leftRightSpeed;
+
+        if (speed > 0) return speed / pc.walkingSpeed;
+        else if (speed < 0) return speed / pc.walkingSpeed;
+        else return 0;
     }
 
     private float MovingSpeedToWalkAndRunBlendValue()
