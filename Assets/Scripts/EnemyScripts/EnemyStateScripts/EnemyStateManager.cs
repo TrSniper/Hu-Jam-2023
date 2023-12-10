@@ -3,14 +3,15 @@ using UnityEngine.AI;
 
 public class EnemyStateManager : MonoBehaviour
 {
-    public bool deadStart;
-
     public EnemyBaseState currentState;
     public EnemyPassiveState enemyPassiveState = new EnemyPassiveState();
     public EnemyAggressiveState enemyAggressiveState = new EnemyAggressiveState();
     public EnemyAlertState enemyAlertState = new EnemyAlertState();
     public EnemyPanicState enemyPanicState = new EnemyPanicState();
     public EnemyDeadState enemyDeadState = new EnemyDeadState();
+
+    [Header("Brave enemies doesn't hide in AlertState, they continue to patrol")] public bool isBrave;
+    [Header("Assign")] public int health = 10;
 
     [Header("Assign - Ranges")]
     public float sightWidth = 20f;
@@ -22,7 +23,13 @@ public class EnemyStateManager : MonoBehaviour
     public float alertSpeed = 10f;
     public float aggressiveSpeed = 10f;
 
-    [Header("Assign - Patrol")] public PatrolRoute patrolRoute;
+    [Header("Assign - Patrol and Strategic Positions")]
+    public PatrolRoute patrolRoute;
+    public StrategicPositions strategicPositions;
+
+    [Header("No Touch - Info")]
+    public bool isAttacking;
+    public bool isChasing;
 
     [Header("No Touch - Info")]
     public bool isPlayerInHearRange;
@@ -44,8 +51,7 @@ public class EnemyStateManager : MonoBehaviour
         playerTransform = GameObject.Find("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        if (deadStart) ChangeState(enemyDeadState);
-        else ChangeState(enemyPassiveState);
+        ChangeState(enemyPassiveState);
     }
 
     private void Update()

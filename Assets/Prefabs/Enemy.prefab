@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf520209f6693c458fe86cdaac6f216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deadStart: 0
+  isBrave: 0
+  health: 10
   sightWidth: 20
   sightHeight: 2
   hearRange: 30
@@ -128,6 +129,7 @@ MonoBehaviour:
   alertSpeed: 10
   aggressiveSpeed: 10
   patrolRoute: {fileID: 0}
+  strategicPositions: {fileID: 0}
   isPlayerInHearRange: 0
   isPlayerInSightRange: 0
   canSeePlayer: 0

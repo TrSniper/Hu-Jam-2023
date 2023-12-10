@@ -13,21 +13,28 @@ public class EnemyBaseState
 
         enemy.isPlayerInHearRange = Physics.CheckSphere(enemy.transform.position, enemy.hearRange, enemy.playerLayer);
         enemy.isPlayerInSightRange = Physics.CheckBox(enemy.sightAreaCenter, enemy.sightArea / 2 ,Quaternion.identity, enemy.playerLayer);
+
+        //canSeePlayer
+        if (enemy.isPlayerInSightRange)
+        {
+            Ray ray = new Ray(enemy.transform.position, (enemy.playerTransform.position - enemy.transform.position).normalized);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, enemy.sightWidth)) if (hit.collider.CompareTag("Player")) enemy.canSeePlayer = true;
+        }
     }
 
     protected async void Patrol(EnemyStateManager enemy)
     {
-        while (enemy.currentState == enemy.enemyPassiveState || enemy.currentState == enemy.enemyAlertState)
+        while (CanPatrol(enemy))
         {
             //Go forward through the list
             foreach (Vector3 node in enemy.patrolRoute.nodes)
             {
                 enemy.navMeshAgent.SetDestination(node);
 
-                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || enemy.currentState != enemy.enemyPassiveState ||
-                                              enemy.currentState != enemy.enemyAlertState);
-                
-                if (enemy.currentState == enemy.enemyPassiveState || enemy.currentState == enemy.enemyAlertState) return;
+                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || !CanPatrol(enemy));
+                if (!CanPatrol(enemy)) return;
             }
 
             //Go backward through the list
@@ -35,25 +42,19 @@ public class EnemyBaseState
             {
                 enemy.navMeshAgent.SetDestination(enemy.patrolRoute.nodes[i]);
 
-                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || enemy.currentState != enemy.enemyPassiveState ||
-                                              enemy.currentState != enemy.enemyAlertState);
-
-                if (enemy.currentState == enemy.enemyPassiveState || enemy.currentState == enemy.enemyAlertState) return;
+                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || !CanPatrol(enemy));
+                if (!CanPatrol(enemy)) return;
             }
         }
     }
 
+    private bool CanPatrol(EnemyStateManager enemy)
+    {
+        return enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState);
+    }
+
     protected void GoAggressiveWhenSeePlayer(EnemyStateManager enemy)
     {
-        if (enemy.isPlayerInSightRange)
-        {
-            Ray ray = new Ray(enemy.transform.position, (enemy.playerTransform.position - enemy.transform.position).normalized);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, enemy.sightWidth))
-            {
-                if (hit.collider.CompareTag("Player")) enemy.ChangeState(enemy.enemyAggressiveState);
-            }
-        }
+        if (enemy.canSeePlayer) enemy.ChangeState(enemy.enemyAggressiveState);
     }
 }
