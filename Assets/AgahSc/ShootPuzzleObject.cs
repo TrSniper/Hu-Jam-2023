@@ -34,11 +34,12 @@ public class ShootPuzzleObject : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision);
-        if(collision.gameObject.layer != bulletLayer) return;
-        MovePuzzleObject();
-        Debug.Log("Object is supposed to move");
+    {  
+        Debug.Log(collision.gameObject);
+        if (collision.gameObject.tag != "Bullet") return;  
+        {
+            MovePuzzleObject();
+            Debug.Log("Object is supposed to move");
+        }
     }
-
 }
