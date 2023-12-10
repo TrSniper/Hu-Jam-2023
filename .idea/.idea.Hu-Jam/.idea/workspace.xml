@@ -5,40 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b3cd5d8-86ca-469f-83bf-4e0894f540d9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/OzgurScene.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/OzgurScene/NavMesh-Navmesh.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/OzgurScene/NavMesh-Navmesh.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAgressiveState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAgressiveState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAlertState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAlertState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyBaseState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyBaseState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyDeadState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyDeadState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPanicState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPanicState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPassiveState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPassiveState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyStateManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyStateManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/PatrolRoute.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/PatrolRoute.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Hu-Jam/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hu-Jam/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hovl Studio/Render Pipelines support/Unity 2019.2+ HDRPHS.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hovl Studio/Render Pipelines support/Unity 2019.2+ URPHS.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hovl Studio/Render Pipelines support/Unity 2019.3+ HDRPHS.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hovl Studio/Render Pipelines support/Unity 2019.3+ URPHS.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hovl Studio/Render Pipelines support/Unity 2020+ HDRPHS.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hovl Studio/Render Pipelines support/Unity 2020+ URPHS.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/OzgurScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/OzgurScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAgressiveState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAggressiveState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAgressiveState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyAggressiveState.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyBaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyBaseState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyDeadState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyDeadState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPanicState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPanicState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPassiveState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyPassiveState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyStateManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyScripts/EnemyStateScripts/EnemyStateManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +132,7 @@
       <workItem from="1702056966351" duration="1465000" />
       <workItem from="1702058518470" duration="16604000" />
       <workItem from="1702103571742" duration="19403000" />
-      <workItem from="1702190206627" duration="10106000" />
+      <workItem from="1702190206627" duration="13095000" />
     </task>
     <servers />
   </component>

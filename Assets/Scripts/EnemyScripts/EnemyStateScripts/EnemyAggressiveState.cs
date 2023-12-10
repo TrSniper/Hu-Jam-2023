@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class EnemyAgressiveState : EnemyBaseState
+public class EnemyAggressiveState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager enemy)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void OnUpdate(EnemyStateManager enemy)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("AGGRESSIVE");
     }
 }
