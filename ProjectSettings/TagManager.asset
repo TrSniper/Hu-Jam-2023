@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Interactable
+  - Bullet
   layers:
   - Default
   - TransparentFX
