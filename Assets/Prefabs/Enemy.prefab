@@ -120,24 +120,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf520209f6693c458fe86cdaac6f216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadStart: 0
   sightWidth: 20
   sightHeight: 2
   hearRange: 30
-  attackRange: 7
-  walkingSpeed: 2
-  runningSpeed: 5
+  passiveSpeed: 5
+  alertSpeed: 10
+  aggressiveSpeed: 10
   patrolRoute: {fileID: 0}
   isPlayerInHearRange: 0
   isPlayerInSightRange: 0
-  isPlayerInAttackRange: 0
-  didEncounterPlayer: 0
+  canSeePlayer: 0
   enemiesInSightRange: []
   enemiesInHearRange: []
-  sightArea: {x: 20, y: 2, z: 20}
-  sightAreaCenter: {x: 19.89, y: 2, z: 28.62}
+  playerTransform: {fileID: 0}
   navMeshAgent: {fileID: 0}
   playerLayer: 128
   enemyLayer: 2048
+  sightArea: {x: 20, y: 2, z: 20}
+  sightAreaCenter: {x: 20, y: 2, z: 20}
 --- !u!195 &4930089273672460772
 NavMeshAgent:
   m_ObjectHideFlags: 0

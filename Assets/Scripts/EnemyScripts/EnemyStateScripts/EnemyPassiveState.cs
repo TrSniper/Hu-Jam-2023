@@ -9,8 +9,8 @@ public class EnemyPassiveState : EnemyBaseState
     {
         base.EnterState(enemy);
 
+        enemy.navMeshAgent.speed = enemy.passiveSpeed;
         Patrol(enemy);
-
         PlayerCombatManager.OnPlayerAttack += StupidFunction;
     }
 
@@ -39,7 +39,7 @@ public class EnemyPassiveState : EnemyBaseState
         }
 
         //If hear alert enemy go alert, if hear aggressive enemy go aggressive
-        if (enemy.enemiesInHearRange.Length > 0)
+        if (enemy.enemiesInHearRange.Length > 1) //OverlapBox and OverlapSphere counts enemy itself too
         {
             foreach (Collider detectedEnemy in enemy.enemiesInHearRange)
             {
@@ -49,43 +49,12 @@ public class EnemyPassiveState : EnemyBaseState
             }
         }
 
-        //If see player, go aggressive
-        if (enemy.isPlayerInSightRange)
-        {
-            Ray ray = new Ray(enemy.transform.position, (enemy.playerTransform.position - enemy.transform.position ).normalized);
-            enemy.canSeePlayer = Physics.Raycast(ray, enemy.sightWidth, enemy.playerLayer);
-            if (enemy.canSeePlayer) enemy.ChangeState(enemy.enemyAggressiveState);
-        }
+        GoAggressiveWhenSeePlayer(enemy);
 
         //If hear player attack, go alert
         if (playerAttackFlag && enemy.isPlayerInHearRange) enemy.ChangeState(enemy.enemyAlertState);
 
         //TODO: item stolen -> alert
-    }
-
-    private async void Patrol(EnemyStateManager enemy)
-    {
-        //Reason why we have separate while loops is enemy can encounter with player anytime during the patrol loop
-
-        while (enemy.currentState == enemy.enemyPassiveState)
-        {
-            //Go forward through the list
-            foreach (Vector3 node in enemy.patrolRoute.nodes)
-            {
-                enemy.navMeshAgent.SetDestination(node);
-                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.1f || enemy.currentState != enemy.enemyPassiveState);
-            }
-        }
-
-        while (enemy.currentState == enemy.enemyPassiveState)
-        {
-            //Go backward through the list
-            for (int i = enemy.patrolRoute.nodes.Count - 1; i >= 0 ; i--)
-            {
-                enemy.navMeshAgent.SetDestination(enemy.patrolRoute.nodes[i]);
-                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.1f || enemy.currentState != enemy.enemyPassiveState);
-            }
-        }
     }
 
     //What we actually needed to do is:

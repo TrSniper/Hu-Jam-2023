@@ -12,13 +12,15 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyPanicState enemyPanicState = new EnemyPanicState();
     public EnemyDeadState enemyDeadState = new EnemyDeadState();
 
-    [Header("Assign")]
+    [Header("Assign - Ranges")]
     public float sightWidth = 20f;
     public float sightHeight = 2f;
     public float hearRange = 30f;
-    public float attackRange = 7f;
-    public float walkingSpeed = 2f;
-    public float runningSpeed = 5f;
+
+    [Header("Assign - Speeds")]
+    public float passiveSpeed = 5f;
+    public float alertSpeed = 10f;
+    public float aggressiveSpeed = 10f;
 
     [Header("Assign - Patrol")] public PatrolRoute patrolRoute;
 
@@ -26,20 +28,16 @@ public class EnemyStateManager : MonoBehaviour
     public bool isPlayerInHearRange;
     public bool isPlayerInSightRange;
     public bool canSeePlayer;
-    public bool isPlayerInAttackRange;
-    public bool didEncounterPlayer;
     public Collider[] enemiesInSightRange;
     public Collider[] enemiesInHearRange;
-
-    [Header("No Touch - Info")]
-    public Vector3 sightArea;
-    public Vector3 sightAreaCenter;
 
     [Header("No Touch - Info")]
     public Transform playerTransform;
     public NavMeshAgent navMeshAgent;
     public int playerLayer = 1 << 7;
     public int enemyLayer = 1 << 11;
+    public Vector3 sightArea;
+    public Vector3 sightAreaCenter;
 
     private void Awake()
     {
@@ -57,6 +55,7 @@ public class EnemyStateManager : MonoBehaviour
 
     public void ChangeState(EnemyBaseState newState)
     {
+        currentState?.ExitState(this);
         currentState = newState;
         currentState.EnterState(this);
     }
