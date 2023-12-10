@@ -28,6 +28,10 @@ public class EnemyStateManager : MonoBehaviour
     public StrategicPositions strategicPositions;
 
     [Header("No Touch - Info")]
+    public bool isAttacking;
+    public bool isChasing;
+
+    [Header("No Touch - Info")]
     public bool isPlayerInHearRange;
     public bool isPlayerInSightRange;
     public bool canSeePlayer;

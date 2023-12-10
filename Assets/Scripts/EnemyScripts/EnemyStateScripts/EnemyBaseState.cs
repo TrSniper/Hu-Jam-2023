@@ -26,19 +26,15 @@ public class EnemyBaseState
 
     protected async void Patrol(EnemyStateManager enemy)
     {
-        //5 places of patrol condition check
-
-        while (enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState)) //1
+        while (CanPatrol(enemy))
         {
             //Go forward through the list
             foreach (Vector3 node in enemy.patrolRoute.nodes)
             {
                 enemy.navMeshAgent.SetDestination(node);
 
-                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || //2
-                                              !(enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState)));
-                
-                if (!(enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState))) return; //3
+                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || !CanPatrol(enemy));
+                if (!CanPatrol(enemy)) return;
             }
 
             //Go backward through the list
@@ -46,12 +42,15 @@ public class EnemyBaseState
             {
                 enemy.navMeshAgent.SetDestination(enemy.patrolRoute.nodes[i]);
 
-                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || //2
-                                              !(enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState)));
-
-                if (!(enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState))) return; //5
+                await UniTask.WaitUntil(() => enemy.navMeshAgent.remainingDistance < 0.01f || !CanPatrol(enemy));
+                if (!CanPatrol(enemy)) return;
             }
         }
+    }
+
+    private bool CanPatrol(EnemyStateManager enemy)
+    {
+        return enemy.currentState == enemy.enemyPassiveState || (enemy.isBrave && enemy.currentState == enemy.enemyAlertState);
     }
 
     protected void GoAggressiveWhenSeePlayer(EnemyStateManager enemy)
