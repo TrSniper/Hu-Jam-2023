@@ -7,7 +7,7 @@ public class EnemyAlertState : EnemyBaseState
         base.EnterState(enemy);
 
         enemy.navMeshAgent.speed = enemy.alertSpeed;
-        Patrol(enemy);
+        if (!enemy.isBrave) enemy.navMeshAgent.SetDestination(enemy.strategicPositions.positions[0]);
     }
 
     public override void OnUpdate(EnemyStateManager enemy)

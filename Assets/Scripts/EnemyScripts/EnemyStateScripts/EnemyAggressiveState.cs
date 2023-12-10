@@ -7,12 +7,16 @@ public class EnemyAggressiveState : EnemyBaseState
         base.EnterState(enemy);
 
         //Stop
-        Debug.Log("AGGRESSIVE");
         enemy.navMeshAgent.SetDestination(enemy.transform.position);
     }
 
     public override void OnUpdate(EnemyStateManager enemy)
     {
         base.OnUpdate(enemy);
+
+        if (enemy.canSeePlayer)
+        {
+            Debug.Log("SEE");
+        }
     }
 }
