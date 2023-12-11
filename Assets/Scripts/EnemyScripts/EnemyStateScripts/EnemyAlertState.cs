@@ -17,5 +17,11 @@ public class EnemyAlertState : EnemyBaseState
         base.OnUpdate(enemy);
 
         GoAggressiveWhenSeePlayer(enemy);
+
+        if (!enemy.isBrave && enemy.navMeshAgent.remainingDistance < 0.01f)
+        {
+            enemy.navMeshAgent.speed = 0f;
+            enemy.navMeshAgent.SetDestination(enemy.transform.position);
+        }
     }
 }
