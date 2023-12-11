@@ -89,5 +89,20 @@ public class EnemyStateManager : MonoBehaviour
     {
         Debug.Log("enemy got damage: " + damageTaken);
         health -= damageTaken;
+
+        CheckForDeath();
+    }
+
+    private void CheckForDeath()
+    {
+        if (health <= 0)
+        {
+            ChangeState(enemyDeadState);
+            //pcam.ToggleDeathSound(true);
+            //OnHealthChanged?.Invoke(10);
+        }
+
+        //else
+        //pcam.ToggleGetHitSound(true);
     }
 }

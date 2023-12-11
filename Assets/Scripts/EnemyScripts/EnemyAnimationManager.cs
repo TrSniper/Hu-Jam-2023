@@ -22,6 +22,14 @@ public class EnemyAnimationManager : MonoBehaviour
 
         an.SetFloat("IdleOrMoving", MovingSpeedToIdleAndMoveBlendValue());
         an.SetFloat("WalkOrRun", MovingSpeedToWalkAndRunBlendValue());
+
+        //TODO: not here
+        if (esm.currentState == esm.enemyDeadState)
+        {
+            an.SetLayerWeight(2, 0);
+            an.SetLayerWeight(1, 0);
+            an.Play("Death");
+        }
     }
 
     public void ToggleEnemyAim(bool isAiming)

@@ -1139,6 +1139,7 @@ GameObject:
   - component: {fileID: 8544608604142644979}
   - component: {fileID: 7017161923613451057}
   - component: {fileID: 8977488157403192514}
+  - component: {fileID: 2212834602692858963}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1325,7 +1326,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponChangeTime: 0.2
-  rifleCarryLayerWeight: 0
 --- !u!114 &8544608604142644979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   aimModeSensitivityModifier: 0.5
-  knockBackDuration: 0.2
+  knockBackForce: 200
   attackAnimationTime: 0.2
   weapons:
   - {fileID: 5244552098591877529}
@@ -1389,6 +1389,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: da2293691e5756c499fa0c2c33371039, type: 3}
   crosshairImage: {fileID: 0}
   currentCrosshairSpriteIndex: 0
+--- !u!114 &2212834602692858963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502502903578126880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c09d654938d1cf4c8bb589dc202b486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4529163415650156745
 GameObject:
   m_ObjectHideFlags: 0
