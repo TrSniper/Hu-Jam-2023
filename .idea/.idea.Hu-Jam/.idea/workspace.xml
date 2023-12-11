@@ -90,7 +90,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Masaüstü/ZEROGRAVITYHEIST/Zero G Gravity.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/OneDrive/Masaüstü/ZeroGHeist/Zero G Gravity.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\ozgur\OneDrive\Masaüstü\ZEROGRAVITYHEIST" />
       <option name="PASS_PARENT_ENVS" value="1" />
