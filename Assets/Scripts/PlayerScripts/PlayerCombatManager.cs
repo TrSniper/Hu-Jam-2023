@@ -159,8 +159,6 @@ public class PlayerCombatManager : MonoBehaviour
 
     public void GetDamage(int damageTakenAmount)
     {
-        Debug.Log("Player got damage: " + damageTakenAmount);
-
         health -= damageTakenAmount;
         OnHealthChanged?.Invoke(health);
         CheckForDeath();
