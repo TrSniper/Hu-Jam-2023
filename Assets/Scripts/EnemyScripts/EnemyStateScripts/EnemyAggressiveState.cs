@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 public class EnemyAggressiveState : EnemyBaseState
 {
@@ -36,7 +35,7 @@ public class EnemyAggressiveState : EnemyBaseState
         enemy.transform.LookAt(enemy.playerTransform);
         enemy.currentWeapon.Attack();
 
-        if (!enemy.currentWeapon.isLaser && !GravityManager.isGravityActive) PlayKnockBackAnimation(-enemy.transform.forward);
+        if (!enemy.currentWeapon.isLaser && !GravityManager.isGravityActive) PlayKnockBackAnimation(enemy);
         if (enemy.currentWeapon.isLaser) enemy.pcm.GetDamage(enemy.currentWeapon.damage);
 
         enemy.isAttacking = false;
@@ -66,8 +65,8 @@ public class EnemyAggressiveState : EnemyBaseState
         isAttackCooldownOver = true;
     }
 
-    private void PlayKnockBackAnimation(Vector3 attackerTransformForward)
+    private void PlayKnockBackAnimation(EnemyStateManager enemy)
     {
-
+        enemy.rb.AddForce(-enemy.transform.forward * enemy.knockBackForce);
     }
 }

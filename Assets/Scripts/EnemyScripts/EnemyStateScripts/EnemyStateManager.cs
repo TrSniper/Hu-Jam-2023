@@ -14,6 +14,7 @@ public class EnemyStateManager : MonoBehaviour
     [Header("Assign - Combat Related")]
     public int health = 10;
     public WeaponBase currentWeapon;
+    public int knockBackForce = 200;
 
     [Header("Assign - Ranges")]
     public float sightWidth = 20f;
@@ -45,6 +46,7 @@ public class EnemyStateManager : MonoBehaviour
     public PlayerCombatManager pcm;
     public EnemyAnimationManager eam;
     public NavMeshAgent navMeshAgent;
+    public Rigidbody rb;
     public int playerLayer = 1 << 7;
     public int enemyLayer = 1 << 11;
     public Vector3 sightArea;
@@ -56,6 +58,7 @@ public class EnemyStateManager : MonoBehaviour
         pcm = playerTransform.GetComponent<PlayerCombatManager>();
         eam = GetComponent<EnemyAnimationManager>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
         ChangeState(enemyPassiveState);
     }

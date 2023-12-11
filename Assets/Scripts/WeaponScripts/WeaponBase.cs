@@ -23,10 +23,7 @@ public class WeaponBase : MonoBehaviour
 
     protected virtual void OnUpdate()
     {
-        if (isHeldByEnemy)
-        {
-            outTransform.LookAt(pam.transform.position + new Vector3(0f, 1f, 0f));
-        }
+        if (isHeldByEnemy) outTransform.LookAt(pam.transform.position + new Vector3(0f, 3f, 0f));
 
         else
         {

@@ -115,7 +115,6 @@ public class PlayerAnimationManager : MonoBehaviour
         //Rifle to rifle
         if (pcm.currentWeaponIndex is 2 or 3 && pcm.previousWeaponIndex is 2 or 3)
         {
-            Debug.Log("1");
             rifleCarryLayerWeightTween = DOVirtual.Float(rifleCarryLayerWeight, 0, weaponChangeTime,
                 value => rifleCarryLayerWeight = value).SetEase(Ease.Linear);
 
@@ -123,7 +122,6 @@ public class PlayerAnimationManager : MonoBehaviour
             pcm.previousWeapon.gameObject.SetActive(false);
             pcm.currentWeapon.gameObject.SetActive(true);
 
-            Debug.Log("2");
             rifleCarryLayerWeightTween = DOVirtual.Float(rifleCarryLayerWeight, 1, weaponChangeTime,
                 value => rifleCarryLayerWeight = value).SetEase(Ease.Linear);
         }

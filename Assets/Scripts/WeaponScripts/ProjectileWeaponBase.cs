@@ -8,6 +8,8 @@ public class ProjectileWeaponBase : WeaponBase
     {
         base.Attack();
 
-        if (hit.collider != null && !hit.collider.CompareTag("Player")) Instantiate(projectile, outTransform.position, outTransform.rotation);
+        if (isHeldByEnemy) Instantiate(projectile, outTransform.position, outTransform.rotation);
+        else if (hit.collider != null && !hit.collider.CompareTag("Player")) Instantiate(projectile, outTransform.position, outTransform.rotation);
+
     }
 }
