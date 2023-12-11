@@ -2,7 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerCombatManager : MonoBehaviour, IDamageable
+public class PlayerCombatManager : MonoBehaviour
 {
     public static event Action OnPlayerAttack;
     public static event Action<int> OnHealthChanged;
@@ -139,7 +139,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         //pcam.ToggleAttackSound(true);
 
         currentWeapon.Attack();
-        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
+        if (!currentWeapon.isLaser && !GravityManager.isGravityActive) PlayKnockBackAnimation(-transform.forward);
         if (currentWeapon.isLaser && pam.enemy != null) pam.enemy.GetDamage(currentWeapon.damage);
 
         await UniTask.WaitForSeconds(attackAnimationTime);
@@ -153,7 +153,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         isAttackCooldownOver = true;
     }
 
-    public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
+    public async void GetDamage(int damageTakenAmount)
     {
         health -= damageTakenAmount;
         OnHealthChanged?.Invoke(health);

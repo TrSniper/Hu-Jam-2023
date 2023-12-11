@@ -11,7 +11,9 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyDeadState enemyDeadState = new EnemyDeadState();
 
     [Header("Brave enemies doesn't hide in AlertState, they continue to patrol")] public bool isBrave;
-    [Header("Assign")] public int health = 10;
+    [Header("Assign - Combat Related")]
+    public int health = 10;
+    public WeaponBase currentWeapon;
 
     [Header("Assign - Ranges")]
     public float sightWidth = 20f;
@@ -39,6 +41,7 @@ public class EnemyStateManager : MonoBehaviour
 
     [Header("No Touch - Info")]
     public Transform playerTransform;
+    public PlayerCombatManager pcm;
     public EnemyAnimationManager eam;
     public NavMeshAgent navMeshAgent;
     public int playerLayer = 1 << 7;
@@ -49,6 +52,7 @@ public class EnemyStateManager : MonoBehaviour
     private void Awake()
     {
         playerTransform = GameObject.Find("Player").transform;
+        pcm = playerTransform.GetComponent<PlayerCombatManager>();
         eam = GetComponent<EnemyAnimationManager>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 

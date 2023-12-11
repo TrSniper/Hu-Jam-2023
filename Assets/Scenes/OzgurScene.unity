@@ -1701,21 +1701,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4930089273672460772, guid: 679a8ed8d33091740932982804903e9a,
-        type: 3}
-      propertyPath: m_Height
-      value: 4.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4930089273672460772, guid: 679a8ed8d33091740932982804903e9a,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4930089273672460772, guid: 679a8ed8d33091740932982804903e9a,
-        type: 3}
-      propertyPath: m_BaseOffset
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5019537947418968580, guid: 679a8ed8d33091740932982804903e9a,
         type: 3}
       propertyPath: patrolRoute
