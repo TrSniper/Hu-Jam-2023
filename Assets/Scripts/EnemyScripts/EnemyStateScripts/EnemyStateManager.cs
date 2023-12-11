@@ -21,7 +21,6 @@ public class EnemyStateManager : MonoBehaviour
     [Header("Assign - Speeds")]
     public float passiveSpeed = 5f;
     public float alertSpeed = 10f;
-    public float aggressiveSpeed = 10f;
 
     [Header("Assign - Patrol and Strategic Positions")]
     public PatrolRoute patrolRoute;

@@ -163,7 +163,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private void PlayKnockBackAnimation(Vector3 attackerTransformForward)
     {
-        
+
     }
 
     private bool CheckForDeath()
