@@ -3,8 +3,8 @@ using UnityEngine;
 public class PlayerGroundChecker : MonoBehaviour
 {
     [Header("Assign")]
-    [SerializeField] private float radius = 0.5f;
-    [SerializeField] private float offset = 0.75f;
+    [SerializeField] private float radius = 1f;
+    [SerializeField] private float offset = -0.95f;
 
     [Header("Select")] [SerializeField] private bool gizmos;
 
