@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyStateManager : MonoBehaviour
 {
+    public event Action<int> OnEnemyGetHit;
+
     public EnemyBaseState currentState;
     public EnemyPassiveState enemyPassiveState = new EnemyPassiveState();
     public EnemyAggressiveState enemyAggressiveState = new EnemyAggressiveState();
@@ -61,6 +64,8 @@ public class EnemyStateManager : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         ChangeState(enemyPassiveState);
+
+        PlayerCombatManager.OnPlayerDeath += ForgetPlayer;
     }
 
     private void Update()
@@ -87,9 +92,8 @@ public class EnemyStateManager : MonoBehaviour
     //TODO: better
     public void GetDamage(int damageTaken)
     {
-        Debug.Log("enemy got damage: " + damageTaken);
         health -= damageTaken;
-
+        OnEnemyGetHit?.Invoke(health);
         CheckForDeath();
     }
 
@@ -104,5 +108,10 @@ public class EnemyStateManager : MonoBehaviour
 
         //else
         //pcam.ToggleGetHitSound(true);
+    }
+
+    private void ForgetPlayer()
+    {
+        ChangeState(enemyPassiveState);
     }
 }
