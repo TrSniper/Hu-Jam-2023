@@ -12,7 +12,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     [Header("Assign")] [SerializeField] private float weaponChangeTime = 0.2f;
     private Tweener rifleCarryLayerWeightTween;
-    public float rifleCarryLayerWeight;
+    private float rifleCarryLayerWeight;
 
     //[Range(0,1)] public float jumpOrMovementValue;
     //public float jumpBlendValueChangeTime = 1f;

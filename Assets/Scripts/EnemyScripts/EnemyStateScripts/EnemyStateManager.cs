@@ -40,6 +40,7 @@ public class EnemyStateManager : MonoBehaviour
 
     [Header("No Touch - Info")]
     public Transform playerTransform;
+    public EnemyAnimationManager eam;
     public NavMeshAgent navMeshAgent;
     public int playerLayer = 1 << 7;
     public int enemyLayer = 1 << 11;
@@ -49,6 +50,7 @@ public class EnemyStateManager : MonoBehaviour
     private void Awake()
     {
         playerTransform = GameObject.Find("Player").transform;
+        eam = GetComponent<EnemyAnimationManager>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         ChangeState(enemyPassiveState);
@@ -57,6 +59,7 @@ public class EnemyStateManager : MonoBehaviour
     private void Update()
     {
         currentState.OnUpdate(this);
+        Debug.Log(currentState);
     }
 
     public void ChangeState(EnemyBaseState newState)
@@ -73,5 +76,11 @@ public class EnemyStateManager : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, hearRange);
+    }
+
+    //TODO: better
+    public void GetDamage(int damageTaken)
+    {
+        health -= damageTaken;
     }
 }

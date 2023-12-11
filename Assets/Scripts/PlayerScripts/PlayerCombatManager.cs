@@ -138,9 +138,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         OnPlayerAttack?.Invoke();
         //pcam.ToggleAttackSound(true);
 
-        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
-        pam.damageable?.GetDamage(currentWeapon.damage, transform.forward);
         currentWeapon.Attack();
+        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
+        if (currentWeapon.isLaser && pam.enemy != null) pam.enemy.GetDamage(currentWeapon.damage);
 
         await UniTask.WaitForSeconds(attackAnimationTime);
         psd.isAttacking = false;
@@ -163,7 +163,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private void PlayKnockBackAnimation(Vector3 attackerTransformForward)
     {
-
+        
     }
 
     private bool CheckForDeath()

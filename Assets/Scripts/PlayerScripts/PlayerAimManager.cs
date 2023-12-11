@@ -11,7 +11,7 @@ public class PlayerAimManager : MonoBehaviour
     public bool canAttack;
     public float distanceToHitTarget;
 
-    public IDamageable damageable;
+    public EnemyStateManager enemy;
     public IInteractable interactable;
     public IInteractable previousInteractable;
 
@@ -48,7 +48,7 @@ public class PlayerAimManager : MonoBehaviour
         canInteract = false;
         canAttack = false;
 
-        damageable = null;
+        enemy = null;
         interactable = null;
 
         if (Physics.Raycast(crosshairRay, out crosshairHit, attackRange, layerMask))
@@ -68,7 +68,7 @@ public class PlayerAimManager : MonoBehaviour
             if (distanceToHitTarget < attackRange)
             {
                 canAttack = crosshairHit.collider.CompareTag("Enemy");
-                if (canAttack) damageable = crosshairHit.collider.GetComponent<IDamageable>();
+                if (canAttack) enemy = crosshairHit.collider.GetComponent<EnemyStateManager>();
             }
         }
 
