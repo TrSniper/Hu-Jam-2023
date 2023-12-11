@@ -17,7 +17,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     [Header("Info - No Touch")]
     [SerializeField] private WeaponBase[] weapons;
     [SerializeField] private WeaponBase currentWeapon;
-    [SerializeField] private int currentWeaponIndex;
+    public int currentWeaponIndex;
 
     private PlayerStateData psd;
     private PlayerInputManager pim;
@@ -61,6 +61,8 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
 
     private void ChangeWeapon(bool isNextWeaponWillBeSelected)
     {
+        if (currentWeapon != null) currentWeapon.gameObject.SetActive(false);
+
         if (isNextWeaponWillBeSelected)
         {
             for (int i = currentWeaponIndex + 1; i < weapons.Length; i++)
@@ -87,6 +89,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
             }
         }
 
+        currentWeapon.gameObject.SetActive(true);
         cm.ChangeCrosshairImage(currentWeaponIndex);
     }
 

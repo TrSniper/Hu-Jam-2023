@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimationManager : MonoBehaviour
 {
     private PlayerStateData psd;
-    private PlayerInputManager pim;
+    private PlayerCombatManager pcm;
     private PlayerController pc;
     private Animator an;
     private CameraController cameraController;
@@ -20,7 +20,7 @@ public class PlayerAnimationManager : MonoBehaviour
     private void Awake()
     {
         psd = GetComponent<PlayerStateData>();
-        pim = GetComponent<PlayerInputManager>();
+        pcm = GetComponent<PlayerCombatManager>();
         pc = GetComponent<PlayerController>();
         an = transform.GetComponentInChildren<Animator>();
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
@@ -49,6 +49,9 @@ public class PlayerAnimationManager : MonoBehaviour
         {
             an.SetFloat("ForwardOrBackward", SingleDimensionSpeedToSingleDimensionBlendValue(true));
             an.SetFloat("LeftOrRight", SingleDimensionSpeedToSingleDimensionBlendValue(false));
+
+            if (pcm.currentWeaponIndex is 0 or 1) an.Play("AimPistol", 2);
+            else if (pcm.currentWeaponIndex is 2 or 3) an.Play("AimRifle", 2);
         }
 
         else
@@ -57,7 +60,7 @@ public class PlayerAnimationManager : MonoBehaviour
             an.SetFloat("LeftOrRight", 0);
         }
 
-        an.SetLayerWeight(1, CameraFovToAimLayerWeight());
+        an.SetLayerWeight(2, CameraFovToAimLayerWeight());
     }
 
     private async void InOutJumpBlendValue()

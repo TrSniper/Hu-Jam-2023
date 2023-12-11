@@ -17,6 +17,8 @@ public class LaserWeaponBase : WeaponBase
 
     protected override void OnUpdate()
     {
+        base.OnUpdate();
+
         if (lr.enabled)
         {
             lr.SetPosition(0, outTransform.position);
