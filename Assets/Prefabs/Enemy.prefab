@@ -144,6 +144,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3050295201402191227, guid: e467c26eb8f0fee48a0854e2b99f4cce,
+        type: 3}
+      propertyPath: isHeldByEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5738552274521666863, guid: e467c26eb8f0fee48a0854e2b99f4cce,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -227,6 +232,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3738764378419642046, guid: 6e022be5655a9614eba5ec75d4196bd5,
+        type: 3}
+      propertyPath: isHeldByEnemy
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4351166471191969859, guid: 6e022be5655a9614eba5ec75d4196bd5,
         type: 3}

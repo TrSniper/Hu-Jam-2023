@@ -10,6 +10,7 @@ public class EnemyAggressiveState : EnemyBaseState
         base.EnterState(enemy);
 
         //Stop
+        enemy.navMeshAgent.speed = 0f;
         enemy.navMeshAgent.SetDestination(enemy.transform.position);
     }
 
@@ -23,6 +24,10 @@ public class EnemyAggressiveState : EnemyBaseState
 
     private void Attack(EnemyStateManager enemy)
     {
+        //Stop
+        enemy.navMeshAgent.speed = 0f;
+        enemy.navMeshAgent.SetDestination(enemy.transform.position);
+
         enemy.isAttacking = true;
         StartAttackCooldown(enemy);
 
@@ -37,6 +42,7 @@ public class EnemyAggressiveState : EnemyBaseState
 
     private void Chase(EnemyStateManager enemy)
     {
+        enemy.navMeshAgent.speed = enemy.aggressiveSpeed;
         enemy.navMeshAgent.SetDestination(enemy.playerTransform.position);
     }
 
