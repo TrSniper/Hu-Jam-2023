@@ -33,6 +33,12 @@ public class EnemyStateManager : MonoBehaviour
     public PatrolRoute patrolRoute;
     public StrategicPositions strategicPositions;
 
+    [Header("Assign - Sounds")]
+    public AudioSource walkSource;
+    public AudioSource runSource;
+    public AudioSource laserSource;
+    public AudioSource projectileSource;
+
     [Header("No Touch - Info")]
     public bool isAttacking;
     public bool isChasing;

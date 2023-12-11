@@ -38,7 +38,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
                 walkSource.Stop();
 
                 isRunSourcePlaying = false;
-                //runSource.Stop();
+                runSource.Stop();
             }
             else if (psd.isWalking && !isWalkSourcePlaying)
             {
@@ -46,7 +46,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
                 walkSource.Play();
 
                 isRunSourcePlaying = false;
-                //runSource.Stop();
+                runSource.Stop();
             }
             else if (psd.isRunning && !isRunSourcePlaying)
             {
@@ -54,7 +54,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
                 walkSource.Stop();
 
                 isRunSourcePlaying = true;
-                //runSource.Play();
+                runSource.Play();
             }
 
             //Jump Group
