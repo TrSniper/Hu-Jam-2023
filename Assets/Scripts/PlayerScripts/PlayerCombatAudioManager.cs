@@ -4,7 +4,8 @@ public class PlayerCombatAudioManager : MonoBehaviour
 {
     [Header("Assign")]
     [SerializeField] private AudioSource aimSource;
-    [SerializeField] private AudioSource attackSource;
+    [SerializeField] private AudioSource laserAttackSource;
+    [SerializeField] private AudioSource projectileAttackSource;
     [SerializeField] private AudioSource getHitSource;
     [SerializeField] private AudioSource deathSource;
 
@@ -14,10 +15,16 @@ public class PlayerCombatAudioManager : MonoBehaviour
         else aimSource.Stop();
     }
 
-    public void ToggleAttackSound(bool willPlay)
+    public void ToggleLaserAttackSound(bool willPlay)
     {
-        if (willPlay) attackSource.Play();
-        else attackSource.Stop();
+        if (willPlay) laserAttackSource.Play();
+        else laserAttackSource.Stop();
+    }
+
+    public void ToggleProjectileSound(bool willPlay)
+    {
+        if (willPlay) projectileAttackSource.Play();
+        else projectileAttackSource.Stop();
     }
 
     public void ToggleGetHitSound(bool willPlay)

@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Lazer : MonoBehaviour
 {
-    private GameObject player;
+    private PlayerCombatManager pcm;
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        pcm = GameObject.Find("Player").GetComponent<PlayerCombatManager>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.CompareTag("Player"))
         {
-            //player.die();
+            pcm.GetDamage(pcm.health);
         }
     }
 }

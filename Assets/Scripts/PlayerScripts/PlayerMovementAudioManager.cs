@@ -12,9 +12,6 @@ public class PlayerMovementAudioManager : MonoBehaviour
     [SerializeField] private AudioSource ascendSource;
     [SerializeField] private AudioSource descentSource;
 
-    [Header("Assign")]
-    [SerializeField] private AudioSource dashSource;
-
     private bool isWalkSourcePlaying;
     private bool isRunSourcePlaying;
     private bool isJumpSourcePlaying;
@@ -41,7 +38,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
                 walkSource.Stop();
 
                 isRunSourcePlaying = false;
-                runSource.Stop();
+                //runSource.Stop();
             }
             else if (psd.isWalking && !isWalkSourcePlaying)
             {
@@ -49,7 +46,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
                 walkSource.Play();
 
                 isRunSourcePlaying = false;
-                runSource.Stop();
+                //runSource.Stop();
             }
             else if (psd.isRunning && !isRunSourcePlaying)
             {
@@ -57,7 +54,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
                 walkSource.Stop();
 
                 isRunSourcePlaying = true;
-                runSource.Play();
+                //runSource.Play();
             }
 
             //Jump Group
@@ -95,7 +92,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
             }
             else if (!psd.isAscending && isAscendSourcePlaying)
             {
-                ascendSource.Play();
+                ascendSource.Stop();
                 isAscendSourcePlaying = false;
             }
 
@@ -107,7 +104,7 @@ public class PlayerMovementAudioManager : MonoBehaviour
             }
             else if (!psd.isDescending && isDescentSourcePlayingPlaying)
             {
-                descentSource.Play();
+                descentSource.Stop();
                 isDescentSourcePlayingPlaying = false;
             }
         }

@@ -8,7 +8,8 @@ public class PlayerCombatManager : MonoBehaviour
     public static event Action<int> OnHealthChanged;
     public static event Action OnPlayerDeath;
 
-    [Header("Assign")] [SerializeField] private int health = 10;
+    [Header("Assign")]
+    public int health = 10;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
     [SerializeField] private float knockBackForce = 200f;
     [SerializeField] private float attackAnimationTime = 0.2f;
@@ -29,7 +30,7 @@ public class PlayerCombatManager : MonoBehaviour
 
     private Rigidbody rb;
 
-    //private PlayerCombatAudioManager pcam;
+    private PlayerCombatAudioManager pcam;
     private CameraController cameraController;
 
     private bool isAttackCooldownOver = true;
@@ -44,7 +45,7 @@ public class PlayerCombatManager : MonoBehaviour
         panim = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
         rb = GetComponent<Rigidbody>();
-        //pcam = GetComponent<PlayerCombatAudioManager>();
+        pcam = GetComponent<PlayerCombatAudioManager>();
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
 
         //Avoids null refs and other stuff
@@ -121,7 +122,7 @@ public class PlayerCombatManager : MonoBehaviour
             psd.isAiming = true;
             PlayerInputManager.sensitivity *= aimModeSensitivityModifier;
 
-            //pcam.ToggleAimSound(true);
+            pcam.ToggleAimSound(true);
         }
 
         else
@@ -130,7 +131,7 @@ public class PlayerCombatManager : MonoBehaviour
             psd.isAiming = false;
             PlayerInputManager.sensitivity /= aimModeSensitivityModifier;
 
-            //pcam.ToggleAimSound(true);
+            pcam.ToggleAimSound(true);
         }
     }
 
@@ -140,11 +141,19 @@ public class PlayerCombatManager : MonoBehaviour
         StartAttackCooldown();
 
         OnPlayerAttack?.Invoke();
-        //pcam.ToggleAttackSound(true);
-
         currentWeapon.Attack();
-        if (!currentWeapon.isLaser) PlayKnockBackAnimation();
-        if (currentWeapon.isLaser && pam.enemy != null) pam.enemy.GetDamage(currentWeapon.damage);
+
+        if (!currentWeapon.isLaser)
+        {
+            pcam.ToggleProjectileSound(true);
+            PlayKnockBackAnimation();
+        }
+
+        if (currentWeapon.isLaser)
+        {
+            pcam.ToggleLaserAttackSound(true);
+            if (pam.enemy != null) pam.enemy.GetDamage(currentWeapon.damage);
+        }
 
         await UniTask.WaitForSeconds(attackAnimationTime);
         psd.isAttacking = false;
@@ -175,7 +184,7 @@ public class PlayerCombatManager : MonoBehaviour
     {
         if (health <= 0)
         {
-            //pcam.ToggleDeathSound(true);
+            pcam.ToggleDeathSound(true);
             health = 10;
             OnHealthChanged?.Invoke(10);
             OnPlayerDeath?.Invoke();
