@@ -555,6 +555,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4388450493919454355, guid: b57f88a8fec4a8b4a87190dace94c452,
+        type: 3}
+      propertyPath: m_text
+      value: 'Special Thanks
+
+
+        SFX: SwishSwoosh - VFX: JMO Assets - Crosshair:
+        Kenney'
+      objectReference: {fileID: 0}
     - target: {fileID: 5721087967130853940, guid: b57f88a8fec4a8b4a87190dace94c452,
         type: 3}
       propertyPath: m_AnchoredPosition.x

@@ -10,6 +10,14 @@ public class EnemyAlertState : EnemyBaseState
         if (!enemy.isBrave) enemy.navMeshAgent.SetDestination(enemy.strategicPositions.positions[0]);
 
         enemy.eam.ToggleEnemyAim(true);
+
+        enemy.runSource.Play();
+    }
+
+    public override void ExitState(EnemyStateManager enemy)
+    {
+        base.ExitState(enemy);
+        enemy.runSource.Stop();
     }
 
     public override void OnUpdate(EnemyStateManager enemy)

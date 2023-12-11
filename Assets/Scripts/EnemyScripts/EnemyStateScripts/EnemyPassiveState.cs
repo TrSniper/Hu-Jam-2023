@@ -8,9 +8,11 @@ public class EnemyPassiveState : EnemyBaseState
     public override void EnterState(EnemyStateManager enemy)
     {
         base.EnterState(enemy);
-        enemy.navMeshAgent.speed = enemy.passiveSpeed;
-        Patrol(enemy);
+
         PlayerCombatManager.OnPlayerAttack += StupidFunction;
+        enemy.navMeshAgent.speed = enemy.passiveSpeed;
+        enemy.walkSource.Play();
+        Patrol(enemy);
     }
 
     public override void ExitState(EnemyStateManager enemy)
@@ -18,6 +20,7 @@ public class EnemyPassiveState : EnemyBaseState
         base.ExitState(enemy);
 
         PlayerCombatManager.OnPlayerAttack -= StupidFunction;
+        enemy.walkSource.Stop();
     }
 
     public override void OnUpdate(EnemyStateManager enemy)
