@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 5715445336904211006}
   - component: {fileID: 1423030775414943320}
   - component: {fileID: 2721985466389512808}
+  - component: {fileID: 6731215952761506253}
+  - component: {fileID: 7014590950170307769}
+  - component: {fileID: 7555939361268973223}
   m_Layer: 0
   m_Name: SingleDoorFrameSmall
   m_TagString: Untagged
@@ -84,6 +87,69 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6731215952761506253
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3538930256861894760}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.33333325, y: 2, z: 0.3330755}
+  m_Center: {x: -0.16667116, y: 1, z: -0.16653393}
+--- !u!65 &7014590950170307769
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3538930256861894760}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.33333325, y: 0.32804736, z: 1.6666664}
+  m_Center: {x: -0.16667116, y: 1.8359784, z: -0.8333294}
+--- !u!65 &7555939361268973223
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3538930256861894760}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.33333325, y: 2, z: 0.33980304}
+  m_Center: {x: -0.16667116, y: 1, z: -1.5045258}
 --- !u!1 &5017286111813186259
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +161,7 @@ GameObject:
   - component: {fileID: 8256363816006692789}
   - component: {fileID: 7057514684826650167}
   - component: {fileID: 8795820102849196749}
+  - component: {fileID: 4828261005832382192}
   m_Layer: 0
   m_Name: SnigleDoorSmall
   m_TagString: Untagged
@@ -111,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 5017286111813186259}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -7.7647024e-23, z: -1.7763568e-15, w: 1}
-  m_LocalPosition: {x: -0.07181804, y: 0, z: -0.33332825}
+  m_LocalPosition: {x: -0.07181804, y: -0.024999952, z: -0.33332825}
   m_LocalScale: {x: 0.5690809, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -167,3 +234,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4828261005832382192
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5017286111813186259}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.33333328, y: 1.6666665, z: 1}
+  m_Center: {x: -0.16666605, y: 0.83333325, z: -0.5}

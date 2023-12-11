@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7619769610751303309}
   - component: {fileID: 427539150720651568}
   - component: {fileID: 5799733725442454034}
+  - component: {fileID: 2618684457854916470}
   m_Layer: 0
   m_Name: Wall_GiantGlassFrameTop
   m_TagString: Untagged
@@ -84,3 +85,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2618684457854916470
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27982753632192857}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.33333337, y: 2.0000005, z: 2.0000005}
+  m_Center: {x: -0.16666383, y: -0.9999998, z: -1.0000036}
