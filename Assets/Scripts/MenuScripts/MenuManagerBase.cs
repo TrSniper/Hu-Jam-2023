@@ -77,7 +77,7 @@ public class MenuManagerBase : MonoBehaviour
 
     private void OnStartButton()
     {
-        SceneManager.LoadScene("OzgurScene");
+        SceneManager.LoadScene("empty");
     }
 
     private void OnSettingButton()
