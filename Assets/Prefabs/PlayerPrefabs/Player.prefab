@@ -2203,9 +2203,7 @@ MonoBehaviour:
   opacity: 0.3
   crosshairSprites:
   - {fileID: 21300000, guid: f6e67c8ecafa69043a6904bb0cc33cee, type: 3}
-  - {fileID: 21300000, guid: f6e67c8ecafa69043a6904bb0cc33cee, type: 3}
   - {fileID: 21300000, guid: cdc50a3f9eddd0542bb82a752c203d7b, type: 3}
-  - {fileID: 21300000, guid: da2293691e5756c499fa0c2c33371039, type: 3}
   crosshairImage: {fileID: 0}
   currentCrosshairSpriteIndex: 0
 --- !u!114 &2212834602692858963
