@@ -23,8 +23,10 @@ public class DoorLock : MonoBehaviour, ILock
     public event Action OnDoorUnlocked;
     private void Start()
     {
+        if(doorA_startPos != null)
         doorA_startPos = doorA.transform.position;
-        doorB_startPos = doorB.transform.position;
+        if (doorA_startPos != null)
+            doorB_startPos = doorB.transform.position;
     }
     public void GetUnlocked()
     {
@@ -54,9 +56,10 @@ public class DoorLock : MonoBehaviour, ILock
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!foundKey) CheckForDoorKey();
+        
         if (!(other.gameObject.layer == 7 || other.gameObject.layer == 11))
             return;
+        if (!foundKey) CheckForDoorKey();
         if (isUnlocked)
             DoorsOpen();
     }

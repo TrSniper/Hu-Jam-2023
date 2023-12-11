@@ -11,17 +11,17 @@ public class ShootPuzzleObject : MonoBehaviour
     Rigidbody rb;
     [SerializeField] MoveDir moveDir;
     [SerializeField] float forceMultiplier;
-    [SerializeField] LayerMask bulletLayer;
-
+    [SerializeField] bool willUseGravity;
+    [SerializeField] RigidbodyConstraints constraintsBeforeHit; 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.constraints = constraintsBeforeHit;
     }
 
     void MovePuzzleObject() // move object based on direction
     {
-        rb.velocity = Vector3.zero; transform.rotation = Quaternion.identity;//first stop it
-        //rb.Sleep(); same thing?
+        rb.constraints = RigidbodyConstraints.None;
         switch (moveDir)
         {
             case MoveDir.Left:     rb.AddRelativeForce(-transform.right * forceMultiplier, ForceMode.VelocityChange); break;
@@ -34,12 +34,13 @@ public class ShootPuzzleObject : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {  
+    {
         Debug.Log(collision.gameObject);
-        if (collision.gameObject.tag != "Bullet") return;  
-        {
-            MovePuzzleObject();
-            Debug.Log("Object is supposed to move");
-        }
+        if (collision.gameObject.tag != "Bullet") return;
+
+        if (willUseGravity) rb.useGravity = true; else rb.useGravity = false;
+
+        MovePuzzleObject();
+        Debug.Log("Object is supposed to move");
     }
 }
