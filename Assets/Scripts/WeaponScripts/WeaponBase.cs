@@ -4,7 +4,6 @@ public class WeaponBase : MonoBehaviour
 {
     [Header("Assign")]
     public int damage;
-    public int knockBack;
     public float cooldownTime;
     public bool canAutoFire;
 
@@ -25,8 +24,8 @@ public class WeaponBase : MonoBehaviour
     protected virtual void OnUpdate()
     {
         Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2.0f, Screen.height / 2.0f, 0));
-        if (Physics.Raycast(ray, out hit)) transform.LookAt(hit.point);
-        else transform.LookAt(GetMiddleOfTheScreen(pam.attackRange));
+        if (Physics.Raycast(ray, out hit)) outTransform.LookAt(hit.point);
+        else outTransform.LookAt(GetMiddleOfTheScreen(pam.attackRange));
     }
     public virtual void Attack() {}
 

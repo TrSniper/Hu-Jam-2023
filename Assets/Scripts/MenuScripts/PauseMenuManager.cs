@@ -8,6 +8,9 @@ public class PauseMenuManager : MenuManagerBase
     private PlayerStateData.PlayerMainState previousPlayerMainState;
     private bool isGamePaused;
 
+    //TODO: better solution
+    private PlayerCombatManager pcm;
+
     private void Awake()
     {
         psd = GameObject.Find("Player").GetComponent<PlayerStateData>();
@@ -16,6 +19,9 @@ public class PauseMenuManager : MenuManagerBase
         //Default settings
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        //
+        pcm = psd.GetComponent<PlayerCombatManager>();
 
         OnAwake();
     }
@@ -48,6 +54,8 @@ public class PauseMenuManager : MenuManagerBase
 
     private void PauseGame()
     {
+        if (psd.isAiming) pcm.ToggleAim();
+
         isGamePaused = true;
         canvas.enabled = true;
 
