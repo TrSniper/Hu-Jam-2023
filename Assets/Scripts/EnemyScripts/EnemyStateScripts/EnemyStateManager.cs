@@ -63,7 +63,6 @@ public class EnemyStateManager : MonoBehaviour
     private void Update()
     {
         currentState.OnUpdate(this);
-        Debug.Log(currentState);
     }
 
     public void ChangeState(EnemyBaseState newState)
@@ -85,6 +84,7 @@ public class EnemyStateManager : MonoBehaviour
     //TODO: better
     public void GetDamage(int damageTaken)
     {
+        Debug.Log("enemy got damage: " + damageTaken);
         health -= damageTaken;
     }
 }

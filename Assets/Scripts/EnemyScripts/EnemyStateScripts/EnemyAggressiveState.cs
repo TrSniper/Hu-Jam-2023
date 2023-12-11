@@ -12,6 +12,8 @@ public class EnemyAggressiveState : EnemyBaseState
         //Stop
         enemy.navMeshAgent.speed = 0f;
         enemy.navMeshAgent.SetDestination(enemy.transform.position);
+
+        enemy.eam.ToggleEnemyAim(true);
     }
 
     public override void OnUpdate(EnemyStateManager enemy)

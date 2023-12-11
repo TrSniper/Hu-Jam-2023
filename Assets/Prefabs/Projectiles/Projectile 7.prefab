@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 135219337407746228}
   - component: {fileID: 108919900232066054}
   - component: {fileID: -7071734444762330722}
+  - component: {fileID: 8127543953156187941}
   m_Layer: 0
   m_Name: Projectile 7
   m_TagString: Untagged
@@ -5057,6 +5058,19 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &8127543953156187941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254724754748870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f37731e4eff03468640d8b044bfceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 5269040286895873951, guid: 88a41f5fed8b36c4b9981ac4bdb25f9e, type: 3}
 --- !u!1 &1800544799133088
 GameObject:
   m_ObjectHideFlags: 0
