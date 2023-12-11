@@ -22,7 +22,8 @@ public class LaserWeaponBase : WeaponBase
         if (lr.enabled)
         {
             lr.SetPosition(0, outTransform.position);
-            lr.SetPosition(1, GetMiddleOfTheScreen(pam.distanceToHitTarget));
+            if (isHeldByEnemy) lr.SetPosition(1, pam.transform.position + new Vector3(0f, 2f, 0f));
+            else lr.SetPosition(1, GetMiddleOfTheScreen(pam.distanceToHitTarget));
         }
     }
 

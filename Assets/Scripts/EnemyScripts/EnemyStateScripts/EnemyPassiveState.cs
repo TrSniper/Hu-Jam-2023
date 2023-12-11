@@ -69,6 +69,7 @@ public class EnemyPassiveState : EnemyBaseState
     {
         playerAttackFlag = true;
         await UniTask.Yield();
+        await UniTask.Yield();
         playerAttackFlag = false;
     }
 }

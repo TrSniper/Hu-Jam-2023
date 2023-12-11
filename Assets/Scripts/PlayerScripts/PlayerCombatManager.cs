@@ -2,20 +2,20 @@ using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class PlayerCombatManager : MonoBehaviour, IDamageable
+public class PlayerCombatManager : MonoBehaviour
 {
     public static event Action OnPlayerAttack;
     public static event Action<int> OnHealthChanged;
     public static event Action OnPlayerDeath;
 
-    [Header("Assign")]
-    [SerializeField] private int health = 10;
+    [Header("Assign")] [SerializeField] private int health = 10;
     [SerializeField] private float aimModeSensitivityModifier = 0.5f;
-    [SerializeField] private float knockBackDuration = 0.2f;
+    [SerializeField] private float knockBackForce = 200f;
     [SerializeField] private float attackAnimationTime = 0.2f;
 
-    [Header("Info - No Touch")]
-    [SerializeField] private WeaponBase[] weapons;
+    [Header("Info - No Touch")] [SerializeField]
+    private WeaponBase[] weapons;
+
     public WeaponBase currentWeapon;
     public WeaponBase previousWeapon;
     public int currentWeaponIndex;
@@ -26,6 +26,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
     private PlayerAimManager pam;
     private PlayerAnimationManager panim;
     private CrosshairManager cm;
+
+    private Rigidbody rb;
+
     //private PlayerCombatAudioManager pcam;
     private CameraController cameraController;
 
@@ -40,6 +43,7 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         pam = GetComponent<PlayerAimManager>();
         panim = GetComponent<PlayerAnimationManager>();
         cm = GetComponent<CrosshairManager>();
+        rb = GetComponent<Rigidbody>();
         //pcam = GetComponent<PlayerCombatAudioManager>();
         cameraController = GameObject.Find("PlayerCamera").GetComponent<CameraController>();
 
@@ -138,9 +142,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         OnPlayerAttack?.Invoke();
         //pcam.ToggleAttackSound(true);
 
-        if (!currentWeapon.isLaser) PlayKnockBackAnimation(-transform.forward);
-        pam.damageable?.GetDamage(currentWeapon.damage, transform.forward);
         currentWeapon.Attack();
+        if (!currentWeapon.isLaser) PlayKnockBackAnimation();
+        if (currentWeapon.isLaser && pam.enemy != null) pam.enemy.GetDamage(currentWeapon.damage);
 
         await UniTask.WaitForSeconds(attackAnimationTime);
         psd.isAttacking = false;
@@ -153,20 +157,23 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
         isAttackCooldownOver = true;
     }
 
-    public async void GetDamage(int damageTakenAmount, Vector3 attackerTransformForward)
+    public void GetDamage(int damageTakenAmount)
     {
+        Debug.Log("Player got damage: " + damageTakenAmount);
+
         health -= damageTakenAmount;
         OnHealthChanged?.Invoke(health);
-        if (CheckForDeath()) return;
-        await UniTask.WaitForSeconds(knockBackDuration);
+        CheckForDeath();
     }
 
-    private void PlayKnockBackAnimation(Vector3 attackerTransformForward)
+    private void PlayKnockBackAnimation()
     {
-
+        float knock = knockBackForce;
+        if (!GravityManager.isGravityActive) knock *= 10;
+        rb.AddForce(-transform.forward * knock);
     }
 
-    private bool CheckForDeath()
+    private void CheckForDeath()
     {
         if (health <= 0)
         {
@@ -174,17 +181,9 @@ public class PlayerCombatManager : MonoBehaviour, IDamageable
             health = 10;
             OnHealthChanged?.Invoke(10);
             OnPlayerDeath?.Invoke();
-            return true;
         }
 
         //else
         //pcam.ToggleGetHitSound(true);
-        return false;
-    }
-
-    //This is stupid v2 2/3
-    public Transform GetTransform()
-    {
-        return transform;
     }
 }

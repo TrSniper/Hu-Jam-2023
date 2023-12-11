@@ -30,7 +30,7 @@ public class PlayerGroundChecker : MonoBehaviour
         }
 
         psd.isGrounded = collidedObjectNumber > 0;
-        psd.isJumping = !psd.isGrounded;
+        if (psd.isGrounded) psd.isJumping = false;
     }
 
     private void OnDrawGizmos()

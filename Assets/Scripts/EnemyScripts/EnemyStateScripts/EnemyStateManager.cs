@@ -11,7 +11,10 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyDeadState enemyDeadState = new EnemyDeadState();
 
     [Header("Brave enemies doesn't hide in AlertState, they continue to patrol")] public bool isBrave;
-    [Header("Assign")] public int health = 10;
+    [Header("Assign - Combat Related")]
+    public int health = 10;
+    public WeaponBase currentWeapon;
+    public int knockBackForce = 200;
 
     [Header("Assign - Ranges")]
     public float sightWidth = 20f;
@@ -21,7 +24,7 @@ public class EnemyStateManager : MonoBehaviour
     [Header("Assign - Speeds")]
     public float passiveSpeed = 5f;
     public float alertSpeed = 10f;
-    public float aggressiveSpeed = 10f;
+    public float aggressiveSpeed = 7f;
 
     [Header("Assign - Patrol and Strategic Positions")]
     public PatrolRoute patrolRoute;
@@ -40,7 +43,10 @@ public class EnemyStateManager : MonoBehaviour
 
     [Header("No Touch - Info")]
     public Transform playerTransform;
+    public PlayerCombatManager pcm;
+    public EnemyAnimationManager eam;
     public NavMeshAgent navMeshAgent;
+    public Rigidbody rb;
     public int playerLayer = 1 << 7;
     public int enemyLayer = 1 << 11;
     public Vector3 sightArea;
@@ -49,7 +55,10 @@ public class EnemyStateManager : MonoBehaviour
     private void Awake()
     {
         playerTransform = GameObject.Find("Player").transform;
+        pcm = playerTransform.GetComponent<PlayerCombatManager>();
+        eam = GetComponent<EnemyAnimationManager>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
         ChangeState(enemyPassiveState);
     }
@@ -73,5 +82,27 @@ public class EnemyStateManager : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, hearRange);
+    }
+
+    //TODO: better
+    public void GetDamage(int damageTaken)
+    {
+        Debug.Log("enemy got damage: " + damageTaken);
+        health -= damageTaken;
+
+        CheckForDeath();
+    }
+
+    private void CheckForDeath()
+    {
+        if (health <= 0)
+        {
+            ChangeState(enemyDeadState);
+            //pcam.ToggleDeathSound(true);
+            //OnHealthChanged?.Invoke(10);
+        }
+
+        //else
+        //pcam.ToggleGetHitSound(true);
     }
 }

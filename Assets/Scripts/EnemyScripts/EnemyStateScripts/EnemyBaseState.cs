@@ -17,10 +17,13 @@ public class EnemyBaseState
         //canSeePlayer
         if (enemy.isPlayerInSightRange)
         {
-            Ray ray = new Ray(enemy.transform.position, (enemy.playerTransform.position - enemy.transform.position).normalized);
+            Vector3 rayPosition = enemy.transform.position;
+            rayPosition.y += 1;
+
+            Ray ray = new Ray(rayPosition, (enemy.playerTransform.position - enemy.transform.position).normalized);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, enemy.sightWidth)) if (hit.collider.CompareTag("Player")) enemy.canSeePlayer = true;
+            if (Physics.Raycast(ray, out hit, enemy.sightWidth)) enemy.canSeePlayer = hit.collider.CompareTag("Player");
         }
     }
 
