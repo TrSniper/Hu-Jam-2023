@@ -298,6 +298,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1304364334477428877}
+  - {fileID: 3246657866352966931}
   - {fileID: 1584325910102899761}
   - {fileID: 6999298476077228746}
   - {fileID: 8926794976344663160}
@@ -1316,6 +1317,158 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2062266106735453689}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2111285531986054447
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4794974049441969196}
+    m_Modifications:
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_text
+      value: 'Emre Baydan
+
+
+        Game Design
+
+        3D Animations
+
+        3D
+        Modeling'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_margin.x
+      value: -80.47296
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5697579860334991545, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_Name
+      value: Emre
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 42bab85fe3dc4904daf257a438f82491, type: 3}
+--- !u!224 &3246657866352966931 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
+    type: 3}
+  m_PrefabInstance: {fileID: 2111285531986054447}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2291547296254661804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1469,12 +1622,9 @@ PrefabInstance:
       value: 'Agah Cansu
 
 
-        Lead Technical Artist,
+        Level and Game Design
 
-        Level and Game
-        Design
-
-        3D Art.'
+        Puzzle Mechanics'
       objectReference: {fileID: 0}
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
@@ -1485,6 +1635,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_margin.x
       value: -80.47296
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -43.61573
       objectReference: {fileID: 0}
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
@@ -1618,8 +1773,8 @@ PrefabInstance:
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
       propertyPath: m_text
-      value: "\xD6zg\xFCr Dalbeler\n\nLead Unity Developer,\nGame Development, UI,\nAI,
-        Combat, Controls."
+      value: "\xD6zg\xFCr Dalbeler\n\nGame Development\nUI, AI, Combat, \nAnimation
+        Logic\nControls"
       objectReference: {fileID: 0}
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
@@ -1714,7 +1869,7 @@ PrefabInstance:
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.5
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
@@ -2146,7 +2301,7 @@ PrefabInstance:
     - target: {fileID: 5203461336878343248, guid: 020c8ae5deea53245a71952926f5de15,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -160
+      value: -230
       objectReference: {fileID: 0}
     - target: {fileID: 5203461336878343248, guid: 020c8ae5deea53245a71952926f5de15,
         type: 3}
@@ -2868,24 +3023,28 @@ PrefabInstance:
       value: 'Special Thanks
 
 
-        3D Assests: Quaternius.
-
-        SFX: SwishSwoosh.
-
-        VFX:
-        Jean Moreno,
-
-        The Developer.
-
-        2D Assets: Kenney
-
-        Music:
-        SoundFlakes'
+        SFX: SwishSwoosh - VFX: JDO Assets - Crosshair:
+        Kenney'
       objectReference: {fileID: 0}
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
       propertyPath: m_fontSize
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_margin.x
+      value: -356.30353
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_margin.y
+      value: 82.03415
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -285.64133
       objectReference: {fileID: 0}
     - target: {fileID: 1147785312049244482, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
@@ -2970,12 +3129,12 @@ PrefabInstance:
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -60
+      value: -19
       objectReference: {fileID: 0}
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12.5
+      value: -77.5
       objectReference: {fileID: 0}
     - target: {fileID: 3477545417531551804, guid: 42bab85fe3dc4904daf257a438f82491,
         type: 3}
