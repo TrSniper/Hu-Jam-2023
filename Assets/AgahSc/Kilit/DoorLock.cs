@@ -27,6 +27,15 @@ public class DoorLock : MonoBehaviour, ILock
         doorA_startPos = doorA.transform.position;
         if (doorA_startPos != null)
             doorB_startPos = doorB.transform.position;
+
+    }
+    private void OnGUI()
+    {
+      bool open =  GUI.Button(new Rect(Screen.width / 2 +256, Screen.height / 2, 128, 64), "Open Doors");
+        bool close = GUI.Button(new Rect(Screen.width / 2 + 256, Screen.height / 2 + 128, 128, 64), "Close Doors");
+
+        if (open) DoorsOpen();
+        if (close) DoorsClose();
     }
     public void GetUnlocked()
     {
@@ -38,20 +47,20 @@ public class DoorLock : MonoBehaviour, ILock
     {
         if (doorA != null)
         {
-            doorA.transform.DOLocalMove(doorA_targetTransform.position, 1f);
+            doorA.transform.DOLocalMove(doorA_targetTransform.position, 3f);
         }
         if (doorB != null)
         {
-            doorB.transform.DOLocalMove(doorB_targetTransform.position, 1f);
+            doorB.transform.DOLocalMove(doorB_targetTransform.position, 3f);
         }
     }
 
     public void DoorsClose()
     {
         if (doorA != null)
-            doorA.transform.DOLocalMove(doorA_startPos, 1f);
+            doorA.transform.DOLocalMove(doorA_startPos, 3f);
         if (doorB != null)
-            doorB.transform.DOLocalMove(doorB_startPos, 1f);
+            doorB.transform.DOLocalMove(doorB_startPos, 3f);
     }
 
     private void OnTriggerEnter(Collider other)
